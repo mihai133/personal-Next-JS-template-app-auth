@@ -1,8 +1,13 @@
-import { Inter } from 'next/font/google'
+
 import './globals.css'
 import Link from 'next/link'
+import {Montserrat} from 'next/font/google'
 
-const inter = Inter({ subsets: ['latin'] })
+const montserratFont = Montserrat({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  display: 'swap',
+})
 
 export const metadata = {
   title: 'Create Next App',
@@ -12,7 +17,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={montserratFont.className}>
         <header>
           <nav className='flex items-center justify-between'>
             <Link href="/" className='nav-link'>Home</Link>
