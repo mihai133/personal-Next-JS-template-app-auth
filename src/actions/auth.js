@@ -54,7 +54,7 @@ export async function register(state, formData) {
   });
 
   // Create a session
-  await createSession(result.insertedId);
+  await createSession(result.insertedId.toString());
 
   // Redirect
   console.log(result)
