@@ -7,3 +7,7 @@ This is a NextJS template app with authentication and authorization.
 - Authentication with email and password
 - JWT authentication
 - JWT authorization
+
+  ## Tech stack
+  - DB: MongoDB
+  - Backend & Frontend: Next.js
