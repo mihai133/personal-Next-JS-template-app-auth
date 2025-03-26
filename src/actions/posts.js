@@ -4,6 +4,7 @@ import { getCollection } from "@/lib/db";
 import getAuthUser from "@/lib/getAuthUser";
 import { BlogPostSchema } from "@/lib/rules";
 import { ObjectId } from "mongodb";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function createBlogPost(state, formData) {
@@ -104,4 +105,27 @@ export async function updatePost(state, formData) {
   );
   // Redirect to the dashboard
   redirect("/dashboard");
+}
+
+export async function deletePost(formData) {
+  // Check if the user is authenticated
+  const user = await getAuthUser();
+  if (!user) return redirect("/");
+
+  // Find the Post
+  const postsCollection = await getCollection("posts");
+  const post = await postsCollection.findOne({
+    _id: ObjectId.createFromHexString(formData.get("postId")),
+  });
+
+  // Check if the user owns the post
+  if (user.userId !== post.userId.toString()) return redirect("/");
+
+  // Delete the post
+  postsCollection.findOneAndDelete({
+    _id: post._id,
+  });
+
+  // Revalidate path
+  revalidatePath("/dashboard");
 }

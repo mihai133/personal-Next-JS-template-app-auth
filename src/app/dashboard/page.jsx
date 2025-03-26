@@ -1,3 +1,4 @@
+import { deletePost } from "@/actions/posts";
 import { getCollection } from "@/lib/db";
 import getAuthUser from "@/lib/getAuthUser";
 import { ObjectId } from "mongodb";
@@ -7,7 +8,6 @@ export default async function Dashboard() {
   const user = await getAuthUser();
 
   const postsCollection = await getCollection("posts");
-  const posts = await postsCollection?.find();
 
   const userPosts = await postsCollection
     ?.find({ userId: ObjectId.createFromHexString(user.userId) })
@@ -40,7 +40,12 @@ export default async function Dashboard() {
                 <td className="w-1/6 text-blue-500">
                   <Link href={`/posts/edit/${post._id.toString()}`}>Edit</Link>
                 </td>
-                <td className="w-1/6 text-red-500">delete</td>
+                <td className="w-1/6 text-red-500">
+                  <form action={deletePost}>
+                    <input type="hidden" name="postId" value={post._id} />
+                    <button type="submit">Delete</button>
+                  </form>
+                </td>
               </tr>
             ))}
           </tbody>
