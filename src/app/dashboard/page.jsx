@@ -42,7 +42,11 @@ export default async function Dashboard() {
                 </td>
                 <td className="w-1/6 text-red-500">
                   <form action={deletePost}>
-                    <input type="hidden" name="postId" value={post._id} />
+                    <input
+                      type="hidden"
+                      name="postId"
+                      defaultValue={post?._id.toString()}
+                    />
                     <button type="submit">Delete</button>
                   </form>
                 </td>
