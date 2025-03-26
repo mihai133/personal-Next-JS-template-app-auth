@@ -28,3 +28,12 @@ export const LoginFormSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email" }).trim(),
   password: z.string().min(1, { message: "Not be empty" }),
 });
+
+export const BlogPostSchema = z.object({
+  title: z
+    .string()
+    .trim()
+    .min(1, { message: "Title is required" })
+    .max(50, { message: "Title cannot be longer than 50 characters" }),
+  content: z.string().min(1, { message: "Content is required" }).trim(),
+});
