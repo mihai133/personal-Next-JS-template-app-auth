@@ -2,10 +2,11 @@
 
 import { useActionState } from "react";
 
-export default function PostForm({ handler }) {
+export default function PostForm({ handler, post }) {
   const [state, action, isPending] = useActionState(handler, undefined);
   return (
     <form action={action} className="space-y-4">
+      <input type="hidden" name="postId" defaultValue={post?._id} />
       <div>
         <label htmlFor="title" className="label">
           Title
@@ -16,7 +17,7 @@ export default function PostForm({ handler }) {
           id="title"
           className="input"
           placeholder="Title"
-          defaultValue={state?.title}
+          defaultValue={state?.title || post?.title}
         />
         {state?.errors?.title && (
           <p className="error">{state?.errors?.title}</p>
@@ -32,7 +33,7 @@ export default function PostForm({ handler }) {
           id="content"
           className="textarea"
           placeholder="Content"
-          defaultValue={state?.content}
+          defaultValue={state?.content || post?.content}
           rows={6}
         />
         {state?.errors?.content && (

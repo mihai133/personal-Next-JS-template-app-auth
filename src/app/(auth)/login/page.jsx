@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function Login() {
   const [state, action, isPending] = useActionState(login, null);
   return (
-    <div className="container w-1/2 mx-auto">
+    <div className="container md:w-1/2 mx-auto">
       <h1 className="title ">Login</h1>
 
       <form action={action} className="space-y-4">

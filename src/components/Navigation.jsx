@@ -5,7 +5,6 @@ import { logout } from "@/actions/auth";
 export default async function Navigation() {
   const authUser = await getAuthUser();
 
-  console.log(authUser);
   return (
     <nav className="flex items-center justify-between">
       <NavLink label="Home" href="/" />

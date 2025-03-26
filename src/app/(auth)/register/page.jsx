@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function Register() {
   const [state, action, isPending] = useActionState(register, null);
   return (
-    <div className="container w-1/2 mx-auto">
+    <div className="container md:w-1/2 mx-auto">
       <h1 className="title ">Register</h1>
 
       <form action={action} className="space-y-4">
