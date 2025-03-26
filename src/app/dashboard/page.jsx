@@ -1,11 +1,51 @@
-import React from 'react'
+import { getCollection } from "@/lib/db";
+import getAuthUser from "@/lib/getAuthUser";
+import { ObjectId } from "mongodb";
+import Link from "next/link";
 
-const NewPage = () => {
+export default async function Dashboard() {
+  const user = await getAuthUser();
+
+  const postsCollection = await getCollection("posts");
+  const posts = await postsCollection?.find();
+
+  const userPosts = await postsCollection
+    ?.find({ userId: ObjectId.createFromHexString(user.userId) })
+    .sort({ $natural: -1 })
+    .toArray();
+
+  if (!userPosts) return <p>Failed to load posts</p>;
+
+  if (userPosts.length === 0) return <p>You have no posts</p>;
   return (
-    <div>
-      <h1>The new page</h1>
+    <div className="mx-auto">
+      <h1 className="title">Dashboard</h1>
+      {userPosts && (
+        <table>
+          <thead>
+            <tr>
+              <th className="w-3/6 ">Title</th>
+              <th className="w-1/6 sr-only">Title</th>
+              <th className="w-1/6 sr-only">Title</th>
+              <th className="w-1/6 sr-only">Title</th>
+            </tr>
+          </thead>
+          <tbody>
+            {userPosts.map((post) => (
+              <tr key={post._id.toString()}>
+                <td className="w-3/6">{post.title}</td>
+                <td className="w-1/6 text-green-500">
+                  <Link href={`/posts/show/${post._id.toString()}`}>View</Link>
+                </td>
+                <td className="w-1/6 text-blue-500">
+                  <Link href={`/posts/edit/${post._id.toString()}`}>Edit</Link>
+                </td>
+                <td className="w-1/6 text-red-500">delete</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
-  )
+  );
 }
-
-export default NewPage
