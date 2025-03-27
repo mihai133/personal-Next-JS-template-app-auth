@@ -1,0 +1,26 @@
+body {
+  /* --color-primary: rgba(12, 148, 136);
+  --color-primary-50: oklab(var(--color-primary) 0.5);
+  --color-primary-800: var(--color-primary-800);
+  --color-primary-900: #010f0e;
+
+  --color-background: #0c0c0c; */
+
+  --footer-height: 350px;
+  --min-container-height: calc(100vh - var(--footer-height) - 96px);
+}
+
+@utility nav-link {
+  @apply text-slate-200 hover:bg-slate-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium;
+}
+
+@utility nav-link-active {
+  @apply bg-slate-700;
+}
+
+body {
+  @apply bg-[var(--color-background-light)];
+  @apply dark:bg-[var(--color-background-dark)];
+
+  user-select: none;
+}

@@ -1,0 +1,19 @@
+header * {
+  z-index: 99;
+}
+
+/* .image-container {
+  background-size: 100%;
+  -webkit-filter: drop-shadow(-6px 10px 50px var(--color-primary-400));
+  -moz-filter: drop-shadow(-6px 10px 90px var(--color-primary-400));
+  -ms-filter: drop-shadow(-6px 10px 90px var(--color-primary-400));
+  -o-filter: drop-shadow(-6px 10px 90px var(--color-primary-400));
+
+  .service-img {
+    mask: url("/assets/img/shape.svg");
+    -webkit-mask-box-image: url("/assets/img/shape.svg");
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+  }
+} */

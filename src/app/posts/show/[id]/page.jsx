@@ -1,4 +1,4 @@
-import PostCard from "@/components/PostCard";
+import PostCard from "@/components/blog/PostCard";
 import { getCollection } from "@/lib/db";
 import { ObjectId } from "mongodb";
 import React from "react";

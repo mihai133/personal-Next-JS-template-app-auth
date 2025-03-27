@@ -1,0 +1,82 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span {
+  @apply antialiased;
+}
+
+/* h1,
+h2,
+h3,
+h4,
+span {
+  font-family: "Mona Sans";
+} */
+
+/* h5,
+h5,
+p,
+span,
+a,
+button {
+  font-family: "Satoshi";
+} */
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-mona-sans);
+  font-variation-settings: "wdth" 175;
+
+  @apply dark:text-[var(--color-gray-200)];
+}
+
+/* 
+Generate a typography scale
+*/
+h1 {
+  font-size: clamp(1.8rem, 3.5vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 600;
+}
+
+h3 {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 600;
+}
+
+h4 {
+  font-size: clamp(1.3, 2vw, 1.5rem);
+  line-height: 1.3em;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+h5 {
+  font-size: clamp(1.2rem, 1.75vw, 1.25rem);
+  font-weight: 500;
+}
+
+h6 {
+  font-size: clamp(0.75rem, 1.5vw, 1rem);
+  font-weight: 400;
+}
+
+p,
+.button,
+.link {
+  font-size: 16px;
+}
+
+.container-white * {
+  color: var(--color-grey-900);
+}

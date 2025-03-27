@@ -1,5 +1,5 @@
 import { createBlogPost } from "@/actions/posts";
-import PostForm from "@/components/PostForm";
+import PostForm from "@/components/blog/PostForm";
 
 export default async function CreatePost() {
   return (

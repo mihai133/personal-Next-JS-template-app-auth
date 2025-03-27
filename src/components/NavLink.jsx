@@ -8,7 +8,9 @@ export default function NavLink({ label, href }) {
   return (
     <Link
       href={href}
-      className={`nav-link ${pathName === href ? "nav-link-active" : ""}`}
+      className={`nav-link h-full text-black dark:text-white  dark:hover:bg-[var(--color-primary-500)] ${
+        pathName === href ? "bg-[var(--color-primary-500)] text-white" : ""
+      }`}
     >
       {label}
     </Link>

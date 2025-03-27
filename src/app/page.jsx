@@ -1,22 +1,48 @@
-import PostCard from "@/components/PostCard";
-import { getCollection } from "@/lib/db";
+import { FadeIn, FadeInUp } from "@/components/ui/FadeIn";
+import Particles from "@/components/ui/Particles";
+import Link from "next/link";
 
 export default async function HomePage() {
-  const postsCollection = await getCollection("posts");
-  const posts = await postsCollection?.find().sort({ $natural: -1 }).toArray();
-
-  console.log(posts);
-  if (posts) {
-    return (
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 gap-6">
-        {posts.map((post) => (
-          <div key={post._id}>
-            <PostCard post={post} />
+  return (
+    <>
+      <Particles
+        speed={0.1}
+        disableRotation={true}
+        alphaParticles={true}
+        className={
+          "flex w-full h-full min-h-screen mx-auto text-center align-middle flex flex-col justify-center z-[-1]"
+        }
+        particleColors={["#0c9488", "#064a44", "#08685f"]}
+      />
+      <FadeIn duration={1000}>
+        <div className="relative flex flex-col items-center min-h-[90vh] justify-center z-[10]">
+          <div className="flex flex-row space-x-8 items-center justify-center mb-3 py-8">
+            <Link
+              href="/posts"
+              className="text-sm font-medium text-gray-500 hover:text-[var(--color-primary)] dark:text-gray-300 dark:hover:text-[var(--color-secondary-500)] transition-all duration-300"
+            >
+              Blog posts
+            </Link>
+            <Link
+              href="/posts"
+              className="text-sm font-medium text-gray-500 hover:text-[var(--color-primary)] dark:text-gray-300 dark:hover:text-[var(--color-secondary-500)] transition-all duration-300"
+            >
+              Projects
+            </Link>
+            <Link
+              href={"/"}
+              className="text-sm font-medium text-gray-500 hover:text-[var(--color-primary)] dark:text-gray-300 dark:hover:text-[var(--color-secondary-500)] transition-all duration-300"
+            >
+              Contact
+            </Link>
           </div>
-        ))}
-      </div>
-    );
-  } else {
-    return <div>No posts found</div>;
-  }
+          <h1 className="antialiased text-4xl uppercase py-6 ">Dev.Field</h1>
+          <p className="text-gray-600 dark:text-gray-400 text-lg text-center">
+            I'm a software engineer and a web developer. I love to build
+            beautiful and functional websites.
+          </p>
+        </div>
+      </FadeIn>
+    </>
+  );
 }

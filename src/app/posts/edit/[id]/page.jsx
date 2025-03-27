@@ -1,6 +1,6 @@
 import { createBlogPost, updatePost } from "@/actions/posts";
-import PostCard from "@/components/PostCard";
-import PostForm from "@/components/PostForm";
+import PostCard from "@/components/blog/PostCard";
+import PostForm from "@/components/blog/PostForm";
 import { getCollection } from "@/lib/db";
 import getAuthUser from "@/lib/getAuthUser";
 import { ObjectId } from "mongodb";
