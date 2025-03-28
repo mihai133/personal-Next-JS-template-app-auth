@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "node server.js",
+    "start": "source .env && NODE_ENV=production node server.js",
     "prodstart": "NODE_ENV=production node server.js",
     "lint": "next lint"
   },
