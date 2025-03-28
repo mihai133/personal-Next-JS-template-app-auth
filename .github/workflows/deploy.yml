@@ -3,7 +3,7 @@ name: Deploy Next.js to cPanel via FTP
 on:
   push:
     branches:
-      - main # or your main branch
+      - main
 
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20" # or your node version
+          node-version: "20"
 
       - name: Cache dependencies and build artifacts
         uses: actions/cache@v4
@@ -44,5 +44,5 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: .next/
-          remote-dir: /dev.thewebfield.com/.next # adjust to your cPanel path
+          remote-dir: dev.thewebfield.com/.next/ # Removed leading slash
           include: "*"
