@@ -15,7 +15,7 @@ export default async function BlogPage() {
       {posts.length > 0 ? (
         posts.map((post) => (
           <div key={post._id.toString()}>
-            <PostCard post={post} />
+            <PostCard path={"posts"} post={post} />
           </div>
         ))
       ) : (

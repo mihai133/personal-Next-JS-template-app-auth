@@ -5,7 +5,7 @@ import { useActionState } from "react";
 import Link from "next/link";
 
 export default function Login() {
-  const [state, action, isPending] = useActionState(login, null);
+  const [state, action, isPending] = useActionState(login, undefined);
   return (
     <div className="container md:w-full mx-auto min-h-screen flex flex-col justify-center items-center ">
       <div className="login-card ">

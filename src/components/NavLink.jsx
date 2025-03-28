@@ -9,7 +9,9 @@ export default function NavLink({ label, href }) {
     <Link
       href={href}
       className={`nav-link ${
-        pathName === href ? "bg-[var(--color-secondary-200)]" : ""
+        pathName === href
+          ? "bg-[var(--color-secondary-200)] dark:bg-[var(--color-primary-500)]"
+          : ""
       }`}
     >
       {label}

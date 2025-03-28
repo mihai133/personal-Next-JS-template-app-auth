@@ -1,11 +1,16 @@
 import Link from "next/link";
 
-export default function PostCard({ post, showEdit }) {
+export default function PostCard({ path, post, showEdit }) {
+  const CTARead =
+    (path === "projects" && "Read project") ||
+    (path === "posts" && "Read article") ||
+    "Read";
+
   return (
     <div className="flex flex-col gap-4">
       {showEdit && (
         <Link
-          href={`/posts/edit/${post._id.toString()}`}
+          href={`/${path}/edit/${post._id.toString()}`}
           className="btn-primary w-fit text-sm"
         >
           Edit
@@ -15,17 +20,19 @@ export default function PostCard({ post, showEdit }) {
         <p className="text-slate-400 text-xs">
           {post._id.getTimestamp().toDateString()}
         </p>
-        <Link href={`/posts/show/${post._id.toString()}`}>
+        <Link href={`/${path}/show/${post._id.toString()}`}>
           <h3 className="text-xs font-bold dark:text-white mb-4">
             {post.title}
           </h3>
         </Link>
-        <p className="text-slate-400 text-sm mb-2">{post.content}</p>
+        <p className="text-slate-500 text-sm mb-2 line-clamp-3">
+          {post.content}
+        </p>
         <Link
-          href={`/posts/show/${post._id.toString()}`}
+          href={`/${path}/show/${post._id.toString()}`}
           className="dark:text-gray-400 hover:underline"
         >
-          Read article
+          {CTARead}
         </Link>
       </div>
     </div>

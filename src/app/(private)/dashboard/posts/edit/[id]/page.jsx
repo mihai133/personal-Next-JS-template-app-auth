@@ -1,6 +1,4 @@
 import { createBlogPost, updatePost } from "@/actions/posts";
-import PostCard from "@/components/blog/PostCard";
-import PostForm from "@/components/blog/PostForm";
 import Form from "@/components/Form";
 import { getCollection } from "@/lib/db";
 import getAuthUser from "@/lib/getAuthUser";
@@ -36,11 +34,7 @@ export default async function Edit({ params }) {
       </h1>
 
       {post ? (
-        <Form
-          handler={updatePost}
-          post={post}
-          type="Post"
-        />
+        <Form handler={updatePost} post={post} type="Post" />
       ) : (
         <p>Error</p>
       )}

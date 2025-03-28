@@ -39,6 +39,7 @@ export default async function Show({ params }) {
     <>
       {post ? (
         <PostContent
+          type={"posts"}
           post={post}
           showEdit={user && user?.userId === post.userId}
         />

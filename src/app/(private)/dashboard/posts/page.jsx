@@ -16,7 +16,7 @@ export default async function DashboardPostsPage() {
     .toArray();
 
   return (
-    <div>
+    <>
       <div className="flex justify-between items-center">
         <h1 className="title">Articles</h1>
         <Link href="/dashboard/posts/create">
@@ -25,7 +25,7 @@ export default async function DashboardPostsPage() {
           </button>
         </Link>
       </div>
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-6">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -81,6 +81,6 @@ export default async function DashboardPostsPage() {
           </tbody>
         </table>
       </div>
-    </div>
+    </>
   );
 }

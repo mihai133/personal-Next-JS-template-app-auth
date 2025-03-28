@@ -1,5 +1,26 @@
+import PostContent from "@/components/blog/PostContent";
+import { getCollection } from "@/lib/db";
+import { ObjectId } from "mongodb";
 import React from "react";
 
-export default function page() {
-  return <div>Project page</div>;
+export default async function Show({ params }) {
+  const { id } = await params;
+
+  const projectsCollection = await getCollection("projects");
+  const project =
+    id.length === 24
+      ? await projectsCollection?.findOne({
+          _id: ObjectId.createFromHexString(id),
+        })
+      : null;
+
+  return (
+    <>
+      {project ? (
+        <PostContent post={project} showEdit={true} />
+      ) : (
+        <div>Project not found</div>
+      )}
+    </>
+  );
 }

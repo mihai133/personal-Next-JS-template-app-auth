@@ -15,9 +15,7 @@ export default async function BlogLayout({ children }) {
         <Navigation />
       </header>
       <Suspense fallback={<LoadingArticles title={"Projects"} />}>
-        <main className="container max-w-[900px] mx-auto mt-10 min-h-screen">
-          {children}
-        </main>
+        <main className=" mx-auto min-h-screen">{children}</main>
       </Suspense>
     </>
   );

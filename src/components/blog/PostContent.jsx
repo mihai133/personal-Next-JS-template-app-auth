@@ -1,12 +1,16 @@
 import Link from "next/link";
 import GoBackButton from "../navigation/GoBackButton";
+import getAuthUser from "@/lib/getAuthUser";
 
-export default function PostContent({ post, showEdit }) {
+export default async function PostContent({ type, post }) {
+  const user = await getAuthUser();
+  const userOwns = user?.userId === post.userId.toString();
+
   return (
     <div className="flex flex-col gap-4">
-      {showEdit && (
+      {userOwns && (
         <Link
-          href={`/posts/edit/${post._id.toString()}`}
+          href={`/dashboard/${type}/edit/${post._id.toString()}`}
           className="btn-primary w-fit text-sm"
         >
           Edit
@@ -23,14 +27,14 @@ export default function PostContent({ post, showEdit }) {
               <p className="text-slate-400 text-xs">
                 {post._id.getTimestamp().toDateString()}
               </p>
-              <p className="text-center text-gray-600 dark:text-gray-400 text-lg">
+              <p className="text-center text-gray-600 dark:text-gray-400 text-lg ">
                 {post?.excerpt || "No excerpt found"}
               </p>
             </div>
           </div>
         </div>
       </div>
-      <p className="container max-w-[500px] mx-auto dark:text-slate-400 text-sm mb-2">
+      <p className="container max-w-[600px] mx-auto dark:text-slate-400 text-sm mb-2 text-balance">
         {post.content}
       </p>
     </div>
