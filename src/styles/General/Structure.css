@@ -31,6 +31,10 @@ header * {
   }
 }
 
+.button-primary {
+  @apply bg-[var(--color-primary)] hover:bg-[var(--color-primary-100)] dark:bg-[var(--color-primary-300)] dark:hover:bg-[var(--color-primary-500)] text-white px-4 py-2 rounded-md shadow-sm  transition duration-300 active:bg-slate-800 disabled:bg-slate-300 disabled:text-slate-100 disabled:cursor-not-allowed;
+}
+
 input[type="text"],
 input[type="email"],
 input[type="password"],

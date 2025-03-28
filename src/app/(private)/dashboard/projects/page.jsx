@@ -1,15 +1,6 @@
-"use server";
-
-import {
-  createProject,
-  updateProject,
-  deleteProject,
-} from "@/actions/projects";
+import { deleteProject } from "@/actions/projects";
 import { getCollection } from "@/lib/db";
-import ProjectForm from "@/components/Projects/ProjectForm";
 import Link from "next/link";
-import getAuthUser from "@/lib/getAuthUser";
-import { ObjectId } from "mongodb";
 import DeleteActionButton from "@/components/DeleteActionButton";
 
 export default async function DashboardProjectsPage() {
@@ -30,24 +21,6 @@ export default async function DashboardProjectsPage() {
         </Link>
       </div>
 
-      {/* <div key={project._id}>
-            <h2>{project.title}</h2>
-            <p className="text-white">{project.content}</p>
-            <form action={deleteProject}>
-              <input
-                type="hidden"
-                name="projectId"
-                value={project._id.toString()}
-              />
-              <button type="submit" className="text-white">
-                Delete
-              </button>
-            </form>
-          </div>
-        ))
-      ) : (
-        <div className="text-white">No projects found</div>
-      )} */}
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>

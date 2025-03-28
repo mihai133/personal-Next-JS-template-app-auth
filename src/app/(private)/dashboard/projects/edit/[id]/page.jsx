@@ -1,9 +1,8 @@
-import { createProject } from "@/actions/projects";
-import ProjectForm from "@/components/Projects/ProjectForm";
+import { updateProject } from "@/actions/projects";
+import Form from "@/components/Form";
 import { getCollection } from "@/lib/db";
 import getAuthUser from "@/lib/getAuthUser";
 import { ObjectId } from "mongodb";
-import React from "react";
 
 export default async function Edit({ params }) {
   const { id } = await params;
@@ -16,11 +15,28 @@ export default async function Edit({ params }) {
     project = await projectsCollection.findOne({
       _id: ObjectId.createFromHexString(id),
     });
-    return (
-      <div>
-        <h1>Create Project</h1>
-        <ProjectForm action={createProject} project={project} />
-      </div>
-    );
+
+    project = JSON.parse(JSON.stringify(project));
+
+    if (user?.userId !== project.userId) {
+      return (
+        <div className="text-white">
+          You are not allowed to edit this project
+        </div>
+      );
+    }
+  } else {
+    project = null;
   }
+
+  return (
+    <div>
+      <h1>Update Project</h1>
+      {project ? (
+        <Form handler={updateProject} post={project} type="Project" />
+      ) : (
+        <p>Error retrieving project</p>
+      )}
+    </div>
+  );
 }

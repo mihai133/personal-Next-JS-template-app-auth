@@ -99,7 +99,6 @@ export async function updateProject(state, formData) {
   );
 
   // Revalidate path
-  revalidatePath("/dashboard/projects");
   redirect("/dashboard/projects");
 }
 

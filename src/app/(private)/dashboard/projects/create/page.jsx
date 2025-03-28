@@ -1,12 +1,11 @@
 import { createProject } from "@/actions/projects";
-import ProjectForm from "@/components/Projects/ProjectForm";
-import React from "react";
+import Form from "@/components/Form";
 
 export default function CreateProject() {
   return (
     <div>
       <h1>Create Project</h1>
-      <ProjectForm handler={createProject} />
+      <Form handler={createProject} type="Project" />
     </div>
   );
 }

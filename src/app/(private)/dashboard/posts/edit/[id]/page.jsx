@@ -1,6 +1,7 @@
 import { createBlogPost, updatePost } from "@/actions/posts";
 import PostCard from "@/components/blog/PostCard";
 import PostForm from "@/components/blog/PostForm";
+import Form from "@/components/Form";
 import { getCollection } from "@/lib/db";
 import getAuthUser from "@/lib/getAuthUser";
 import { ObjectId } from "mongodb";
@@ -34,7 +35,15 @@ export default async function Edit({ params }) {
         Edit Post
       </h1>
 
-      {post ? <PostForm handler={updatePost} post={post} /> : <p>Error</p>}
+      {post ? (
+        <Form
+          handler={updatePost}
+          post={post}
+          type="Post"
+        />
+      ) : (
+        <p>Error</p>
+      )}
     </div>
   );
 }
