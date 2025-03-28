@@ -44,5 +44,5 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: .next/
-          remote-dir: dev.thewebfield.com/.next/ # Removed leading slash
+          remote-dir: dev.thewebfield.com/ # Removed leading slash
           include: "*"
