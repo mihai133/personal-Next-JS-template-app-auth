@@ -30,7 +30,7 @@ export default function PostContent({ post, showEdit }) {
           </div>
         </div>
       </div>
-      <p className="container max-w-[500px] mx-auto text-slate-400 text-sm mb-2">
+      <p className="container max-w-[500px] mx-auto dark:text-slate-400 text-sm mb-2">
         {post.content}
       </p>
     </div>

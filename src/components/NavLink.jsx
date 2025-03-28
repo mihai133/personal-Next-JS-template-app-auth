@@ -8,8 +8,8 @@ export default function NavLink({ label, href }) {
   return (
     <Link
       href={href}
-      className={`nav-link h-full text-black dark:text-white  dark:hover:bg-[var(--color-primary-500)] ${
-        pathName === href ? "bg-[var(--color-primary-500)] text-white" : ""
+      className={`nav-link ${
+        pathName === href ? "bg-[var(--color-secondary-200)]" : ""
       }`}
     >
       {label}

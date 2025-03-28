@@ -17,7 +17,7 @@ export default async function ProjectsPage() {
       <h1>Projects</h1>
       {projects.length > 0 ? (
         projects.map((project) => (
-          <div key={project._id}>
+          <div key={project._id.toString()}>
             <h2>{project.title}</h2>
             <p>{project.content}</p>
           </div>

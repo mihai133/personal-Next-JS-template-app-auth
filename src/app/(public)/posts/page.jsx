@@ -14,7 +14,7 @@ export default async function BlogPage() {
       <h1>Blog</h1>
       {posts.length > 0 ? (
         posts.map((post) => (
-          <div key={post._id}>
+          <div key={post._id.toString()}>
             <PostCard post={post} />
           </div>
         ))

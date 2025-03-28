@@ -2,7 +2,10 @@ import getAuthUser from "@/lib/getAuthUser";
 import NavLink from "./NavLink";
 import { logout } from "@/actions/auth";
 import Link from "next/link";
-import { ArrowLongLeftIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowLongLeftIcon,
+  ArrowRightEndOnRectangleIcon,
+} from "@heroicons/react/24/outline";
 import GoBackButton from "./navigation/GoBackButton";
 
 export default async function Navigation({ showHome }) {
@@ -13,14 +16,17 @@ export default async function Navigation({ showHome }) {
       <div className="flex lg:flex-1">
         <NavLink href={"/"} label={"Home"} />
       </div>
-      <div className="inline-flex items-center gap-4">
+      <div className="inline-flex items-center space-x-2">
         <NavLink href="/posts" label="Blog" />
         <NavLink href="/projects" label="Projects" />
         {authUser ? (
           <>
             <NavLink href="/dashboard" label="Dashboard" />
             <form action={logout}>
-              <button className="nav-link">Logout</button>
+              <button className="nav-link inline-flex items-center">
+                Logout
+                <ArrowRightEndOnRectangleIcon className="w-5 h-5 ml-2 -mr-1 " />
+              </button>
             </form>
           </>
         ) : (
