@@ -9,7 +9,7 @@ export const metadata = {
   keywords: "next.js, blog, template",
 };
 
-export default function BlogLayout({ children }) {
+export default function DashboardLayout({ children }) {
   return (
     <>
       <Sidebar />

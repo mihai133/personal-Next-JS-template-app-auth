@@ -8,7 +8,7 @@ export const metadata = {
   keywords: "next.js, blog, template",
 };
 
-export default async function BlogLayout({ children }) {
+export default async function ProjectsLayout({ children }) {
   return (
     <>
       <header className="sticky top-3 left-0">

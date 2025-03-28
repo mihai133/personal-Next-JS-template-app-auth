@@ -4,7 +4,7 @@ import { getCollection } from "@/lib/db";
 import getAuthUser from "@/lib/getAuthUser";
 import { ObjectId } from "mongodb";
 
-export default async function Edit({ params }) {
+export default async function EditDashboardProject({ params }) {
   const { id } = await params;
 
   const user = await getAuthUser();

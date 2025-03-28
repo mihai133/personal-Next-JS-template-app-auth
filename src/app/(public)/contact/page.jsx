@@ -6,7 +6,7 @@ import OverlayCard from "@/components/ui/OverlayCard";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import React, { useActionState, useState } from "react";
 
-export default function page() {
+export default function ContactPage() {
   const [showForm, setShowForm] = useState(false);
   const [state, action, isPending] = useActionState(sendMessage, null);
 

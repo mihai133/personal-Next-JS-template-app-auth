@@ -22,7 +22,7 @@ export async function generateMetadata({ params, searchParams }, parent) {
   };
 }
 
-export default async function Show({ params }) {
+export default async function ShowPublicPost({ params }) {
   const { id } = await params;
 
   const user = await getAuthUser();

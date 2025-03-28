@@ -3,7 +3,7 @@ import { getCollection } from "@/lib/db";
 import { ObjectId } from "mongodb";
 import React from "react";
 
-export default async function Show({ params }) {
+export default async function ShowPublicProject({ params }) {
   const { id } = await params;
 
   const projectsCollection = await getCollection("projects");
