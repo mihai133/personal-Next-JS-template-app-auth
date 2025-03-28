@@ -118,10 +118,11 @@ export async function deleteProject(formData) {
   if (user.userId !== project.userId.toString()) return redirect("/");
 
   // Delete the project
-  projectsCollection.findOneAndDelete({
-    _id: project._id,
-  });
-
-  // Revalidate path
-  revalidatePath("/dashboard/projects");
+  projectsCollection
+    .findOneAndDelete({
+      _id: project._id,
+    })
+    .then(() => {
+      revalidatePath("/dashboard/projects");
+    });
 }
