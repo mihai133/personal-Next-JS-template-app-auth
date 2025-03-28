@@ -34,22 +34,12 @@ jobs:
       - name: Build Next.js app
         run: npm run build
 
-      - name: Upload to cPanel via FTP
+      - name: Upload .next folder to cPanel via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: .next/
-          remote-dir: /dev.thewebfield.com/ # adjust to your cPanel path
-          include: "*"
-
-      - name: Upload public folder to cPanel via FTP
-        uses: fjogeleit/ftp-deploy-action@v1
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: public/
-          remote-dir: /public_html/public/ # adjust to your cPanel path
+          remote-dir: /dev.thewebfield.com/.next/ # adjust to your cPanel path
           include: "*"
