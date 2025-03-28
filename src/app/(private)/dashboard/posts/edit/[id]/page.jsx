@@ -20,7 +20,9 @@ export default async function Edit({ params }) {
 
     post = JSON.parse(JSON.stringify(post));
     if (user?.userId !== post.userId) {
-      return <div>You are not allowed to edit this post</div>;
+      return (
+        <div className="text-white">You are not allowed to edit this post</div>
+      );
     }
   } else {
     post = null;

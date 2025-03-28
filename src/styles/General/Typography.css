@@ -78,5 +78,5 @@ p,
 }
 
 .container-white * {
-  color: var(--color-grey-900);
+  color: var(--color-secondary-900);
 }
