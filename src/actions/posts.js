@@ -119,7 +119,7 @@ export async function deletePost(formData) {
   });
 
   // Check if the user owns the post
-  if (user.userId !== post.userId.toString()) return redirect("/");
+  if (user.userId !== post?.userId?.toString()) return redirect("/");
 
   // Delete the post
   postsCollection.findOneAndDelete({

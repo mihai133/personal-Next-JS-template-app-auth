@@ -2,11 +2,19 @@
 
 import { deleteProject } from "@/actions/projects";
 import { getCollection } from "@/lib/db";
+import getAuthUser from "@/lib/getAuthUser";
+import { ObjectId } from "mongodb";
 import Link from "next/link";
 
 export default async function DashboardPostsPage() {
+  const user = await getAuthUser();
   const postsCollection = await getCollection("posts");
-  const posts = await postsCollection?.find().sort({ $natural: -1 }).toArray();
+  const posts = await postsCollection
+    ?.find({
+      userId: ObjectId?.createFromHexString(user.userId),
+    })
+    .sort({ $natural: -1 })
+    .toArray();
 
   return (
     <div>

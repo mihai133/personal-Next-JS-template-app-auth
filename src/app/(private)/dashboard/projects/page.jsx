@@ -7,9 +7,9 @@ import {
 } from "@/actions/projects";
 import { getCollection } from "@/lib/db";
 import ProjectForm from "@/components/Projects/ProjectForm";
-import handler from "@/actions/cautare-dosar";
-import CautareDosar from "@/actions/cautare-dosar";
 import Link from "next/link";
+import getAuthUser from "@/lib/getAuthUser";
+import { ObjectId } from "mongodb";
 
 export default async function DashboardProjectsPage() {
   const projectsCollection = await getCollection("projects");
