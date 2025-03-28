@@ -1,0 +1,8 @@
+@import "tailwindcss";
+@import "./General/_variables.css";
+@import "./General/Theme.css";
+@import "./General/Structure.css";
+@import "./General/Typography.css";
+
+@import "./General/Components/OverlayCard.css";
+@import "./General/animations.css";

@@ -1,0 +1,15 @@
+@keyframes scaleLoop {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+.scale-animation {
+  animation: scaleLoop 2.5s infinite ease-in;
+}

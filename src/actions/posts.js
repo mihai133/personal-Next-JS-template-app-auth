@@ -51,7 +51,7 @@ export async function createBlogPost(state, formData) {
     };
   }
   // Redirect to the dashboard
-  redirect("/dashboard");
+  redirect("/dashboard/posts");
 }
 
 export async function updatePost(state, formData) {
@@ -104,28 +104,33 @@ export async function updatePost(state, formData) {
     }
   );
   // Redirect to the dashboard
-  redirect("/dashboard");
+  redirect("/dashboard/posts");
 }
 
 export async function deletePost(formData) {
   // Check if the user is authenticated
+  const postId = formData.get("postId");
   const user = await getAuthUser();
   if (!user) return redirect("/");
 
   // Find the Post
   const postsCollection = await getCollection("posts");
   const post = await postsCollection.findOne({
-    _id: ObjectId.createFromHexString(formData.get("postId")),
+    _id: ObjectId.createFromHexString(postId),
   });
 
   // Check if the user owns the post
-  if (user.userId !== post.userId.toString()) return redirect("/");
+  if (user?.userId !== post?.userId?.toString()) return redirect("/");
 
   // Delete the post
-  postsCollection.findOneAndDelete({
-    _id: post._id,
-  });
+  await postsCollection
+    .findOneAndDelete({
+      _id: post._id,
+    })
+    .then(() => {
+      revalidatePath("/dashboard/posts");
+    });
 
   // Revalidate path
-  revalidatePath("/dashboard");
+  // revalidatePath("/dashboard/posts");
 }
