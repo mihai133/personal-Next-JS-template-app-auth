@@ -1,12 +1,14 @@
 "use client";
+import { sendMessage } from "@/actions/contact";
 import GoBackButton from "@/components/navigation/GoBackButton";
 import { FadeIn } from "@/components/ui/FadeIn";
 import OverlayCard from "@/components/ui/OverlayCard";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import React, { useState } from "react";
+import React, { useActionState, useState } from "react";
 
 export default function page() {
   const [showForm, setShowForm] = useState(false);
+  const [state, action, isPending] = useActionState(sendMessage, null);
 
   function toggleForm() {
     setShowForm(!showForm);
@@ -50,7 +52,7 @@ export default function page() {
               </p>
               {showForm && (
                 <form
-                  action=""
+                  action={action}
                   className={`${
                     showForm
                       ? "opacity-100 transition duration-300 delay-150 ease-in-out"
@@ -69,9 +71,9 @@ export default function page() {
                       placeholder="Name"
                       // defaultValue={state?.name}
                     />
-                    {/* {state?.errors?.name && (
+                    {state?.errors?.name && (
                       <p className="error">{state?.errors?.name}</p>
-                    )} */}
+                    )}
                   </div>
 
                   <div>
@@ -86,9 +88,9 @@ export default function page() {
                       placeholder="Email"
                       // defaultValue={state?.email}
                     />
-                    {/* {state?.errors?.email && (
+                    {state?.errors?.email && (
                       <p className="error">{state?.errors?.email}</p>
-                    )} */}
+                    )}
                   </div>
 
                   <div>
@@ -103,9 +105,9 @@ export default function page() {
                       // defaultValue={state?.message}
                       rows={6}
                     />
-                    {/* {state?.errors?.message && (
+                    {state?.errors?.message && (
                       <p className="error">{state?.errors?.message}</p>
-                    )} */}
+                    )}
                   </div>
 
                   <div className="flex items-end gap-4">
