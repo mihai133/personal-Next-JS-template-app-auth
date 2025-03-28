@@ -35,7 +35,7 @@ jobs:
         run: npm run build
 
       - name: Upload to cPanel via FTP
-        uses: fjogeleit/ftp-deploy-action@v1
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
