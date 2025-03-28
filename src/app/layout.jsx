@@ -1,7 +1,6 @@
 import "../styles/App.css";
 import { Mona_Sans } from "next/font/google";
 import Footer from "@/components/Footer";
-import Navigation from "@/components/Navigation";
 
 const monasansFont = Mona_Sans({
   subsets: ["latin"],
@@ -20,7 +19,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <main className={`min-h-screen`}>{children}</main>
+        <main className={`min-h-screen px-3 lg:px-0`}>{children}</main>
         <Footer />
       </body>
     </html>

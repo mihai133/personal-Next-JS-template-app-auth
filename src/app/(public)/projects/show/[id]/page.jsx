@@ -17,7 +17,7 @@ export default async function Show({ params }) {
   return (
     <>
       {project ? (
-        <PostContent post={project} showEdit={true} />
+        <PostContent type={"projects"} post={project} showEdit={true} />
       ) : (
         <div>Project not found</div>
       )}

@@ -78,5 +78,6 @@ p,
 }
 
 .container-white * {
-  color: var(--color-secondary-900);
+  @apply text-[var(--color-secondary-900)];
+  @apply dark:text-[var(--color-secondary-200)];
 }

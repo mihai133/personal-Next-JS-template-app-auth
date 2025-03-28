@@ -1,4 +1,4 @@
-import { FadeIn, FadeInUp } from "@/components/ui/FadeIn";
+import { FadeIn } from "@/components/ui/FadeIn";
 import Particles from "@/components/ui/Particles";
 import Link from "next/link";
 
@@ -30,7 +30,7 @@ export default async function HomePage() {
               Projects
             </Link>
             <Link
-              href={"/"}
+              href={"/contact"}
               className="text-sm font-medium text-gray-500 hover:text-[var(--color-primary)] dark:text-gray-300 dark:hover:text-[var(--color-secondary-500)] transition-all duration-300"
             >
               Contact

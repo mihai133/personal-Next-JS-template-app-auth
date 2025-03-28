@@ -18,6 +18,10 @@ body {
   @apply bg-slate-700;
 }
 
+@utility button-secondary {
+  @apply bg-[var(--color-secondary)] hover:bg-[var(--color-primary-100)] dark:bg-[#111] dark:hover:bg-[var(--color-primary-500)] text-white px-4 py-2 rounded-md shadow-sm dark:ring-[var(--color-secondary-600)] dark:ring-1 dark:ring-inset dark:hover:ring-[var(--color-primary-100)] transition duration-300 active:bg-slate-800 disabled:bg-slate-300 disabled:text-slate-100 disabled:cursor-not-allowed;
+}
+
 body {
   @apply bg-[var(--color-background-light)];
   @apply dark:bg-[var(--color-background-dark)];

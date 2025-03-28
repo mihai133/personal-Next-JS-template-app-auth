@@ -11,11 +11,11 @@ export const metadata = {
 export default function BlogLayout({ children }) {
   return (
     <>
-      <header>
+      <header className="sticky top-3 left-0">
         <Navigation />
       </header>
       <Suspense fallback={<LoadingArticles title={"Blog"} />}>
-        <main className="mx-auto  min-h-screen">{children}</main>
+        <main className="mx-auto  min-h-screen px-3 lg:px-0">{children}</main>
       </Suspense>
     </>
   );

@@ -5,6 +5,10 @@ import getAuthUser from "@/lib/getAuthUser";
 export default async function PostContent({ type, post }) {
   const user = await getAuthUser();
   const userOwns = user?.userId === post.userId.toString();
+  const backButtonType =
+    (type === "projects" && "Back to Projects") ||
+    (type === "posts" && "Back to Blog") ||
+    "Go Back";
 
   return (
     <div className="flex flex-col gap-4">
@@ -16,10 +20,10 @@ export default async function PostContent({ type, post }) {
           Edit
         </Link>
       )}
-      <div className="bg-white py-24 shadow-md rounded-lg w-full text-white">
-        <div className="container-white text-middle max-w-[900px] mx-auto">
+      <div className="bg-white dark:bg-[var(--color-primary-800)] mx-auto py-36 mt-12 shadow-md rounded-lg w-full text-white">
+        <div className="container-white text-middle  ">
           <div className="text-center mb-2 rounded-md h-full space-y-4">
-            <GoBackButton label={"Back to Blog"} />
+            <GoBackButton label={backButtonType} />
             <h1 className=" text-4xl font-bold">
               {post?.title || "Post not found"}
             </h1>

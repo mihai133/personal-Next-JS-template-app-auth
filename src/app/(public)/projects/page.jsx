@@ -10,7 +10,6 @@ export default async function ProjectsPage() {
     .sort({ $natural: -1 })
     .toArray();
 
-  console.log(projects);
   if (!projects) {
     return <div className="text-white">Failed to load projects</div>;
   }
