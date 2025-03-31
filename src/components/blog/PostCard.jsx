@@ -17,7 +17,7 @@ export default function PostCard({ path, post, showEdit }) {
         </Link>
       )}
       <div className=" mb-2 rounded-md h-full">
-        <p className="text-slate-400 text-xs">{post.createdAt}</p>
+        {/* <p className="text-slate-400 text-xs">{post.createdAt}</p> */}
         <Link href={`/${path}/show/${post.id.toString()}`}>
           <h3 className="text-xs font-bold dark:text-white mb-4">
             {post.title}

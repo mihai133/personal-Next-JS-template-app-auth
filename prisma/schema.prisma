@@ -16,13 +16,14 @@ model User {
 }
 
 model Post {
-  id        String   @id @default(uuid())
-  title     String
-  content   String
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
-  createdAt DateTime @default(now()) @db.Timestamptz(6)
-  updatedAt DateTime @default(now()) @updatedAt
+  id            String   @id @default(uuid())
+  title         String
+  content       String
+  userId        String
+  featImageName String
+  user          User     @relation(fields: [userId], references: [id])
+  createdAt     DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt     DateTime @default(now()) @updatedAt
 }
 
 model Project {

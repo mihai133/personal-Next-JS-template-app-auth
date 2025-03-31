@@ -5,6 +5,7 @@ import getAuthUser from "@/lib/getAuthUser";
 import { BlogPostSchema } from "@/lib/rules";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { uploadFile } from "./uploadFile";
 
 export async function createBlogPost(state, formData) {
   // Check if the user is authenticated
@@ -16,6 +17,7 @@ export async function createBlogPost(state, formData) {
   // Validate the form fields
   const title = formData.get("title");
   const content = formData.get("content");
+  const file = formData.get("file");
 
   const validatedField = BlogPostSchema.safeParse({
     title,
@@ -33,14 +35,32 @@ export async function createBlogPost(state, formData) {
 
   // Save the post to the database
   try {
+    let featImageName = null;
+    if (file) {
+      // Upload the file
+      const uploadResult = await uploadFile(file);
+      if (uploadResult?.error) {
+        return {
+          errors: { file: uploadResult.error },
+          title: title,
+          content: content,
+        };
+      }
+      console.log(uploadResult);
+      featImageName = uploadResult?.name;
+    }
+    console.log("IMAGE NAME", typeof featImageName, featImageName);
+    // return;
     const post = await prisma.post.create({
       data: {
         title: validatedField.data.title,
         content: validatedField.data.content,
         userId: user.userId,
+        featImageName: featImageName,
       },
     });
   } catch (error) {
+    console.log(error);
     return {
       errors: { title: error.message },
       title: title,

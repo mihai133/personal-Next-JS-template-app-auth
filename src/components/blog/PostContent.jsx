@@ -1,6 +1,7 @@
 import Link from "next/link";
 import GoBackButton from "../navigation/GoBackButton";
 import getAuthUser from "@/lib/getAuthUser";
+import Image from "next/image";
 
 export default async function PostContent({ type, post }) {
   const user = await getAuthUser();
@@ -20,7 +21,22 @@ export default async function PostContent({ type, post }) {
           Edit
         </Link>
       )}
-      <div className="bg-white dark:bg-[var(--color-primary-800)] mx-auto py-36 mt-12 shadow-md rounded-lg w-full text-white">
+      {post?.featImageName && (
+        <Image
+          src={post?.featImageName ? `/uploads/${post?.featImageName}` : null}
+          alt="Image Preview"
+          className="relative w-full h-full object-cover rounded-lg"
+          width={600}
+          height={600}
+        />
+      )}
+      <div
+        className={`${
+          post?.featImageName
+            ? `dark:bg-[url('/uploads/${post?.featImageName}')] `
+            : "bg-white dark:bg-[var(--color-primary-800)] "
+        } mx-auto py-36 mt-12 shadow-md rounded-lg w-full text-white`}
+      >
         <div className="container-white text-middle  ">
           <div className="text-center mb-2 rounded-md h-full space-y-4">
             <GoBackButton label={backButtonType} />
@@ -28,7 +44,7 @@ export default async function PostContent({ type, post }) {
               {post?.title || "Post not found"}
             </h1>
             <div>
-              <p className="text-slate-400 text-xs">{post.createdAt}</p>
+              {/* <p className="text-slate-400 text-xs">{post.createdAt}</p> */}
               <p className="text-center text-gray-600 dark:text-gray-400 text-lg ">
                 {post?.excerpt || "No excerpt found"}
               </p>
