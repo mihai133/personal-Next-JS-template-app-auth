@@ -21,6 +21,8 @@ model Post {
   content       String
   userId        String
   featImageName String
+  metaTitle     String?
+  metaDesc      String?
   user          User     @relation(fields: [userId], references: [id])
   createdAt     DateTime @default(now()) @db.Timestamptz(6)
   updatedAt     DateTime @default(now()) @updatedAt

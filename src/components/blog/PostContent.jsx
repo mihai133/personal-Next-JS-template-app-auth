@@ -12,7 +12,7 @@ export default async function PostContent({ type, post }) {
     <div className="flex flex-col gap-4">
       <BlogHero post={post} userOwns={userOwns} type={type} />
 
-      <div className="post-content-container container max-w-[600px] mx-auto dark:text-slate-400 text-sm mb-2 text-balance">
+      <div className="post-content-container container max-w-[800px] mx-auto dark:text-slate-400 text-sm mb-2 text-balance space-y-4 text-pretty">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>
           {post.content}
         </ReactMarkdown>

@@ -15,11 +15,15 @@ export async function createBlogPost(state, formData) {
   }
 
   // Validate the form fields
+  const metaTitle = formData.get("metaTitle");
+  const metaDesc = formData.get("metaDesc");
   const title = formData.get("title");
   const content = formData.get("content");
   const file = formData.get("file");
 
   const validatedField = BlogPostSchema.safeParse({
+    metaTitle,
+    metaDesc,
     title,
     content,
   });
@@ -28,6 +32,8 @@ export async function createBlogPost(state, formData) {
   if (!validatedField.success) {
     return {
       errors: validatedField.error.flatten().fieldErrors,
+      metaTitle,
+      metaDesc,
       title,
       content,
     };
@@ -53,6 +59,8 @@ export async function createBlogPost(state, formData) {
     // return;
     await prisma.post.create({
       data: {
+        metaTitle: validatedField.data.metaTitle,
+        metaDesc: validatedField.data.metaDesc,
         title: validatedField.data.title,
         content: validatedField.data.content,
         userId: user.userId,
@@ -63,6 +71,8 @@ export async function createBlogPost(state, formData) {
     console.log(error);
     return {
       errors: { title: error.message },
+      metaTitle: metaTitle,
+      metaDesc: metaDesc,
       title: title,
       content: content,
     };
@@ -78,6 +88,8 @@ export async function updatePost(state, formData) {
   if (!user) return redirect("/");
 
   // Validate the form fields
+  const metaTitle = formData.get("metaTitle");
+  const metaDesc = formData.get("metaDesc");
   const title = formData.get("title");
   const content = formData.get("content");
   const postId = formData.get("postId");
@@ -85,6 +97,8 @@ export async function updatePost(state, formData) {
   const existingFeatImageName = formData.get("existingFeatImageName");
 
   const validatedField = BlogPostSchema.safeParse({
+    metaTitle,
+    metaDesc,
     title,
     content,
   });
@@ -93,6 +107,8 @@ export async function updatePost(state, formData) {
   if (!validatedField.success) {
     return {
       errors: validatedField.error.flatten().fieldErrors,
+      metaTitle,
+      metaDesc,
       title,
       content,
     };
@@ -122,6 +138,8 @@ export async function updatePost(state, formData) {
         id: postId,
       },
       data: {
+        metaTitle: validatedField.data.metaTitle,
+        metaDesc: validatedField.data.metaDesc,
         title: validatedField.data.title,
         content: validatedField.data.content,
         featImageName: existingFeatImageName || featImageName,
@@ -131,6 +149,8 @@ export async function updatePost(state, formData) {
     console.error(error.message);
     return {
       errors: { title: "Failed to update post" },
+      metaTitle: metaTitle,
+      metaDesc: metaDesc,
       title: title,
       content: content,
     };

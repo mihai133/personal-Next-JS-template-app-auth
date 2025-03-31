@@ -14,6 +14,7 @@ export default function Form({ handler, post, type, images }) {
         name={`${type.toLowerCase()}Id`}
         defaultValue={`${post?.id}`}
       />
+      <h3>Content</h3>
       <div>
         <label htmlFor="title" className="text-white">
           Title
@@ -92,6 +93,37 @@ export default function Form({ handler, post, type, images }) {
             defaultValue={post?.featImageName}
           />
         </label>
+      </div>
+      <hr className="border-gray-200 dark:border-gray-700" />
+      <h3>SEO</h3>
+      <div className="flex flex-col gap-4">
+        <label htmlFor="meta-title" className="text-white">
+          Meta Title
+        </label>
+        <input
+          type="text"
+          name="metaTitle"
+          placeholder="Meta Title"
+          defaultValue={state?.metaTitle || post?.metaTitle}
+        />
+        {state?.errors?.metaTitle && (
+          <p className="error">{state?.errors?.metaTitle}</p>
+        )}
+      </div>
+
+      <div className="flex flex-col gap-4">
+        <label htmlFor="meta-desc" className="text-white">
+          Meta Description
+        </label>
+        <textarea
+          name="metaDesc"
+          placeholder="Meta Description"
+          defaultValue={state?.metaDesc || post?.metaDesc}
+          rows={6}
+        />
+        {state?.errors?.metaDesc && (
+          <p className="error">{state?.errors?.metaDesc}</p>
+        )}
       </div>
 
       <button disabled={isPending} type="submit" className="button-primary">
