@@ -15,7 +15,8 @@ export default function BlogHero({ post, userOwns, type }) {
 
   return (
     <div
-      className="relative aspect-video flex flex-col items-center justify-center max-w-7xl w-[1400px] rounded-xl mx-auto dark:bg-[var(--color-primary-500)]"
+      className="relative aspect-video flex flex-col items-center justify-center max-w-7xl w-[1400px] rounded-xl mx-auto dark:bg-[var(--color-primary-500
+      )] z-1"
       style={{
         backgroundImage: post?.featImageName
           ? `url('/uploads/${post?.featImageName}')`

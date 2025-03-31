@@ -11,7 +11,7 @@ export const metadata = {
 export default function BlogLayout({ children }) {
   return (
     <>
-      <header className="sticky top-3 left-0">
+      <header className="sticky top-3 left-0 z-10">
         <Navigation />
       </header>
       <Suspense fallback={<LoadingArticles title={"Blog"} />}>
