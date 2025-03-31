@@ -82,6 +82,7 @@ export async function updatePost(state, formData) {
   const content = formData.get("content");
   const postId = formData.get("postId");
   const file = formData.get("file");
+  const existingFeatImageName = formData.get("existingFeatImageName");
 
   const validatedField = BlogPostSchema.safeParse({
     title,
@@ -99,19 +100,21 @@ export async function updatePost(state, formData) {
 
   // Find the post
   try {
-    let featImageName = null;
-    if (file) {
-      // Upload the file
-      const uploadResult = await uploadFile(file);
-      if (uploadResult?.error) {
-        return {
-          errors: { file: uploadResult.error },
-          title: title,
-          content: content,
-        };
+    if (!existingFeatImageName) {
+      let featImageName = null;
+      if (file) {
+        // Upload the file
+        const uploadResult = await uploadFile(file);
+        if (uploadResult?.error) {
+          return {
+            errors: { file: uploadResult.error },
+            title: title,
+            content: content,
+          };
+        }
+
+        featImageName = uploadResult?.name;
       }
-      console.log(uploadResult);
-      featImageName = uploadResult?.name;
     }
 
     await prisma.post.update({
@@ -121,7 +124,7 @@ export async function updatePost(state, formData) {
       data: {
         title: validatedField.data.title,
         content: validatedField.data.content,
-        featImageName: featImageName,
+        featImageName: existingFeatImageName || featImageName,
       },
     });
   } catch (error) {

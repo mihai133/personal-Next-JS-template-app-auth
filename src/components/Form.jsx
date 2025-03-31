@@ -84,6 +84,13 @@ export default function Form({ handler, post, type, images }) {
             className="hidden"
             name="file"
           />
+
+          <input
+            id="file-name"
+            type="hidden"
+            name="existingFeatImageName"
+            defaultValue={post?.featImageName}
+          />
         </label>
       </div>
 
