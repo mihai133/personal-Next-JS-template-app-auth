@@ -18,8 +18,6 @@ export async function generateMetadata({ params, searchParams }, parent) {
   return {
     title: post?.metaTitle || post?.title,
     description: post?.metaDesc || post?.content,
-    title: post?.title,
-    description: post?.content,
   };
 }
 
