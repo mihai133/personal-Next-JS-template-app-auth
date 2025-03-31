@@ -51,7 +51,7 @@ export async function createBlogPost(state, formData) {
     }
     console.log("IMAGE NAME", typeof featImageName, featImageName);
     // return;
-    const post = await prisma.post.create({
+    await prisma.post.create({
       data: {
         title: validatedField.data.title,
         content: validatedField.data.content,
@@ -81,6 +81,7 @@ export async function updatePost(state, formData) {
   const title = formData.get("title");
   const content = formData.get("content");
   const postId = formData.get("postId");
+  const file = formData.get("file");
 
   const validatedField = BlogPostSchema.safeParse({
     title,
@@ -98,6 +99,21 @@ export async function updatePost(state, formData) {
 
   // Find the post
   try {
+    let featImageName = null;
+    if (file) {
+      // Upload the file
+      const uploadResult = await uploadFile(file);
+      if (uploadResult?.error) {
+        return {
+          errors: { file: uploadResult.error },
+          title: title,
+          content: content,
+        };
+      }
+      console.log(uploadResult);
+      featImageName = uploadResult?.name;
+    }
+
     await prisma.post.update({
       where: {
         id: postId,
@@ -105,6 +121,7 @@ export async function updatePost(state, formData) {
       data: {
         title: validatedField.data.title,
         content: validatedField.data.content,
+        featImageName: featImageName,
       },
     });
   } catch (error) {
