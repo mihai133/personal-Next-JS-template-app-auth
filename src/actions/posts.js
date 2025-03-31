@@ -1,9 +1,8 @@
 "use server";
 
-import { getCollection } from "@/lib/db";
+import prisma from "@/lib/db";
 import getAuthUser from "@/lib/getAuthUser";
 import { BlogPostSchema } from "@/lib/rules";
-import { ObjectId } from "mongodb";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -13,8 +12,6 @@ export async function createBlogPost(state, formData) {
   if (!user) {
     return redirect("/");
   }
-  // console.log(user);
-  // return;
 
   // Validate the form fields
   const title = formData.get("title");
@@ -26,7 +23,6 @@ export async function createBlogPost(state, formData) {
   });
 
   // If any form fields are invalid
-
   if (!validatedField.success) {
     return {
       errors: validatedField.error.flatten().fieldErrors,
@@ -37,20 +33,22 @@ export async function createBlogPost(state, formData) {
 
   // Save the post to the database
   try {
-    const postsCollection = await getCollection("posts");
-    const post = {
-      title: validatedField.data.title,
-      content: validatedField.data.content,
-      userId: ObjectId.createFromHexString(user.userId),
-    };
-
-    await postsCollection.insertOne(post);
+    const post = await prisma.post.create({
+      data: {
+        title: validatedField.data.title,
+        content: validatedField.data.content,
+        userId: user.userId,
+      },
+    });
   } catch (error) {
     return {
       errors: { title: error.message },
+      title: title,
+      content: content,
     };
   }
   // Redirect to the dashboard
+  revalidatePath("/dashboard/posts");
   redirect("/dashboard/posts");
 }
 
@@ -58,9 +56,6 @@ export async function updatePost(state, formData) {
   // Check if the user is authenticated
   const user = await getAuthUser();
   if (!user) return redirect("/");
-
-  // console.log(user);
-  // return;
 
   // Validate the form fields
   const title = formData.get("title");
@@ -73,7 +68,6 @@ export async function updatePost(state, formData) {
   });
 
   // If any form fields are invalid
-
   if (!validatedField.success) {
     return {
       errors: validatedField.error.flatten().fieldErrors,
@@ -83,27 +77,27 @@ export async function updatePost(state, formData) {
   }
 
   // Find the post
-  const postsCollection = await getCollection("posts");
-  const post = await postsCollection.findOne({
-    _id: ObjectId.createFromHexString(postId),
-  });
-
-  // Check if the user owns the post
-  if (user.userId !== post.userId.toString()) return redirect("/");
-
-  // Update the post to the database
-  postsCollection.findOneAndUpdate(
-    {
-      _id: post._id,
-    },
-    {
-      $set: {
+  try {
+    await prisma.post.update({
+      where: {
+        id: postId,
+      },
+      data: {
         title: validatedField.data.title,
         content: validatedField.data.content,
       },
-    }
-  );
+    });
+  } catch (error) {
+    console.error(error.message);
+    return {
+      errors: { title: "Failed to update post" },
+      title: title,
+      content: content,
+    };
+  }
+
   // Redirect to the dashboard
+  revalidatePath("/dashboard/posts");
   redirect("/dashboard/posts");
 }
 
@@ -113,24 +107,21 @@ export async function deletePost(formData) {
   const user = await getAuthUser();
   if (!user) return redirect("/");
 
-  // Find the Post
-  const postsCollection = await getCollection("posts");
-  const post = await postsCollection.findOne({
-    _id: ObjectId.createFromHexString(postId),
-  });
-
-  // Check if the user owns the post
-  if (user?.userId !== post?.userId?.toString()) return redirect("/");
-
-  // Delete the post
-  await postsCollection
-    .findOneAndDelete({
-      _id: post._id,
-    })
-    .then(() => {
-      revalidatePath("/dashboard/posts");
+  try {
+    // Delete the post
+    await prisma.post.delete({
+      where: {
+        id: postId,
+      },
     });
+    revalidatePath("/dashboard/posts");
+  } catch (error) {
+    console.error(error);
+    return {
+      errors: { title: "Failed to delete post" },
+    };
+  }
 
   // Revalidate path
-  // revalidatePath("/dashboard/posts");
+  revalidatePath("/dashboard/posts");
 }

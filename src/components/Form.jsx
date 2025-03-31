@@ -10,7 +10,7 @@ export default function Form({ handler, post, type }) {
       <input
         type="hidden"
         name={`${type.toLowerCase()}Id`}
-        defaultValue={`${post?._id}`}
+        defaultValue={`${post?.id}`}
       />
       <div>
         <label htmlFor="title" className="text-white">

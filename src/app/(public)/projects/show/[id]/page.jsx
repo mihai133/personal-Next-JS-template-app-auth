@@ -1,18 +1,16 @@
 import PostContent from "@/components/blog/PostContent";
-import { getCollection } from "@/lib/db";
+import prisma, { getCollection } from "@/lib/db";
 import { ObjectId } from "mongodb";
 import React from "react";
 
 export default async function ShowPublicProject({ params }) {
   const { id } = await params;
 
-  const projectsCollection = await getCollection("projects");
-  const project =
-    id.length === 24
-      ? await projectsCollection?.findOne({
-          _id: ObjectId.createFromHexString(id),
-        })
-      : null;
+  const project = await prisma.project.findUnique({
+    where: {
+      id: id,
+    },
+  });
 
   return (
     <>

@@ -1,19 +1,17 @@
 import { deletePost } from "@/actions/posts";
 import ActionButton from "@/components/DeleteActionButton";
-import { getCollection } from "@/lib/db";
+import prisma, { getCollection } from "@/lib/db";
 import getAuthUser from "@/lib/getAuthUser";
 import { ObjectId } from "mongodb";
 import Link from "next/link";
 
 export default async function DashboardPostsPage() {
   const user = await getAuthUser();
-  const postsCollection = await getCollection("posts");
-  const posts = await postsCollection
-    ?.find({
-      userId: ObjectId?.createFromHexString(user.userId),
-    })
-    .sort({ $natural: -1 })
-    .toArray();
+  const posts = await prisma.post.findMany({
+    where: {
+      userId: user.userId,
+    },
+  });
 
   return (
     <>
@@ -39,29 +37,29 @@ export default async function DashboardPostsPage() {
           </thead>
           <tbody>
             {posts.length > 0 ? (
-              posts.map((post) => (
+              posts?.map((post) => (
                 <tr
-                  key={post._id}
+                  key={post.id}
                   className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200"
                 >
                   <th
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    <Link href={`/dashboard/posts/show/${post._id.toString()}`}>
+                    <Link href={`/dashboard/posts/show/${post.id.toString()}`}>
                       {post.title}
                     </Link>
                   </th>
 
                   <td className="px-6 py-4 flex flex-row space-x-4">
                     <Link
-                      href={`/dashboard/posts/show/${post._id.toString()}`}
+                      href={`/dashboard/posts/show/${post.id.toString()}`}
                       className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                     >
                       View
                     </Link>
                     <Link
-                      href={`/dashboard/posts/edit/${post._id.toString()}`}
+                      href={`/dashboard/posts/edit/${post.id.toString()}`}
                       className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                     >
                       Edit
@@ -69,14 +67,18 @@ export default async function DashboardPostsPage() {
                     <ActionButton
                       action={deletePost}
                       name={"postId"}
-                      value={post._id.toString()}
+                      value={post.id.toString()}
                       label="Delete"
                     />
                   </td>
                 </tr>
               ))
             ) : (
-              <p>No posts found</p>
+              <tr>
+                <td>
+                  <p>No posts found</p>
+                </td>
+              </tr>
             )}
           </tbody>
         </table>

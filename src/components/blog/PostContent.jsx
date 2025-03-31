@@ -9,12 +9,12 @@ export default async function PostContent({ type, post }) {
     (type === "projects" && "Back to Projects") ||
     (type === "posts" && "Back to Blog") ||
     "Go Back";
-
+  console.log(post);
   return (
     <div className="flex flex-col gap-4">
       {userOwns && (
         <Link
-          href={`/dashboard/${type}/edit/${post._id.toString()}`}
+          href={`/dashboard/${type}/edit/${post.id.toString()}`}
           className="btn-primary w-fit text-sm"
         >
           Edit
@@ -28,9 +28,7 @@ export default async function PostContent({ type, post }) {
               {post?.title || "Post not found"}
             </h1>
             <div>
-              <p className="text-slate-400 text-xs">
-                {post._id.getTimestamp().toDateString()}
-              </p>
+              <p className="text-slate-400 text-xs">{post.createdAt}</p>
               <p className="text-center text-gray-600 dark:text-gray-400 text-lg ">
                 {post?.excerpt || "No excerpt found"}
               </p>

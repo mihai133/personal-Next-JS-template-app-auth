@@ -10,17 +10,15 @@ export default function PostCard({ path, post, showEdit }) {
     <div className="flex flex-col gap-4">
       {showEdit && (
         <Link
-          href={`/${path}/edit/${post._id.toString()}`}
+          href={`/${path}/edit/${post.id.toString()}`}
           className="btn-primary w-fit text-sm"
         >
           Edit
         </Link>
       )}
       <div className=" mb-2 rounded-md h-full">
-        <p className="text-slate-400 text-xs">
-          {post._id.getTimestamp().toDateString()}
-        </p>
-        <Link href={`/${path}/show/${post._id.toString()}`}>
+        <p className="text-slate-400 text-xs">{post.createdAt}</p>
+        <Link href={`/${path}/show/${post.id.toString()}`}>
           <h3 className="text-xs font-bold dark:text-white mb-4">
             {post.title}
           </h3>
@@ -29,7 +27,7 @@ export default function PostCard({ path, post, showEdit }) {
           {post.content}
         </p>
         <Link
-          href={`/${path}/show/${post._id.toString()}`}
+          href={`/${path}/show/${post.id.toString()}`}
           className="dark:text-gray-400 hover:underline"
         >
           {CTARead}

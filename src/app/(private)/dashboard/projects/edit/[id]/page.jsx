@@ -1,6 +1,6 @@
 import { updateProject } from "@/actions/projects";
 import Form from "@/components/Form";
-import { getCollection } from "@/lib/db";
+import prisma, { getCollection } from "@/lib/db";
 import getAuthUser from "@/lib/getAuthUser";
 import { ObjectId } from "mongodb";
 
@@ -9,24 +9,16 @@ export default async function EditDashboardProject({ params }) {
 
   const user = await getAuthUser();
 
-  const projectsCollection = await getCollection("projects");
-  let project;
-  if (id.length === 24 && projectsCollection) {
-    project = await projectsCollection.findOne({
-      _id: ObjectId.createFromHexString(id),
-    });
+  const project = await prisma.project.findUnique({
+    where: {
+      id: id,
+    },
+  });
 
-    project = JSON.parse(JSON.stringify(project));
-
-    if (user?.userId !== project.userId) {
-      return (
-        <div className="text-white">
-          You are not allowed to edit this project
-        </div>
-      );
-    }
-  } else {
-    project = null;
+  if (project?.userId !== user?.userId) {
+    return (
+      <div className="text-white">You are not allowed to edit this post</div>
+    );
   }
 
   return (

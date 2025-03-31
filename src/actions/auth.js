@@ -1,19 +1,11 @@
 "use server";
 
-import { getCollection } from "@/lib/db";
+import prisma from "@/lib/db";
 import { LoginFormSchema, RegisterFormSchema } from "@/lib/rules";
 import { createSession } from "@/lib/sessions";
 import bcrypt from "bcrypt";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-
-// Validate form fields
-// If any form fields are invalid
-// Extract form fields
-// Check if email exists
-// Check if the password is correct
-// Create a session
-// Redirect
 
 export async function register(state, formData) {
   // Validate the form data
@@ -37,35 +29,29 @@ export async function register(state, formData) {
   // Extract the validated fields
   const { email, password } = validatedFields.data;
 
-  // Check if the user already regostered
-  const userCollection = await getCollection("users");
-  if (!userCollection) {
-    return { errorrs: { email: "Server error!" } };
-  }
+  try {
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-  const existingUser = await userCollection.findOne({ email });
-  if (existingUser) {
-    return {
-      errors: {
-        email: "User already registered!",
+    // Save in DB
+    const user = await prisma.user.create({
+      data: {
+        email: email,
+        password: hashedPassword,
       },
+    });
+
+    // Create a session
+    await createSession(user.id);
+
+    // Redirect
+    return { success: true, redirectUrl: "/dashboard" };
+  } catch (error) {
+    console.error(error);
+    return {
+      errors: { email: "Failed to register user" },
     };
   }
-
-  // Hash the password
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  // Save in DB
-  const result = await userCollection.insertOne({
-    email,
-    password: hashedPassword,
-  });
-
-  // Create a session
-  await createSession(result.insertedId.toString());
-
-  // Redirect
-  console.log(result);
 }
 
 export async function login(state, formData) {
@@ -85,28 +71,40 @@ export async function login(state, formData) {
   // Extract form fields
   const { email, password } = validatedFields.data;
 
-  // Check if email exists
-  const userCollection = await getCollection("users");
-  if (!userCollection) return { errorrs: { email: "Server error!" } };
-
-  const existingUser = await userCollection.findOne({ email });
-  if (!existingUser) {
-    return {
-      errors: {
-        email: "User not found!",
+  try {
+    // Check if email exists
+    const existingUser = await prisma.user.findUnique({
+      where: {
+        email: email,
       },
+    });
+
+    if (!existingUser) {
+      return {
+        errors: {
+          email: "User not found!",
+        },
+      };
+    }
+
+    // Check if the password is correct
+    const matchedPassword = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
+    if (!matchedPassword) return { errors: { email: "Invalid credentials!" } };
+
+    // Create a session
+    await createSession(existingUser.id);
+
+    // Redirect
+    redirect("/dashboard");
+  } catch (error) {
+    console.error(error);
+    return {
+      errors: { email: "Failed to login" },
     };
   }
-
-  // Check if the password is correct
-  const matchedPassword = await bcrypt.compare(password, existingUser.password);
-  if (!matchedPassword) return { errors: { email: "Invalid credentials!" } };
-
-  // Create a session
-  await createSession(existingUser._id.toString());
-
-  // Redirect
-  redirect("/dashboard");
 }
 
 export async function logout() {

@@ -3,9 +3,19 @@
 import { register } from "@/actions/auth";
 import { useActionState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Register() {
   const [state, action, isPending] = useActionState(register, null);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (state?.success && state?.redirectUrl) {
+      router.push(state.redirectUrl);
+    }
+  }, [state, router]);
+
   return (
     <div className="container md:w-full mx-auto min-h-screen flex flex-col justify-center items-center ">
       <div className="register-card">
