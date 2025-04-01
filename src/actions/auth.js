@@ -98,7 +98,7 @@ export async function login(state, formData) {
     await createSession(existingUser.id);
 
     // Redirect
-    redirect("/dashboard");
+    return { success: true, redirectUrl: "/dashboard" };
   } catch (error) {
     console.error(error);
     return {

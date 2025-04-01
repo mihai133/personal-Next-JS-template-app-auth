@@ -1,11 +1,20 @@
 "use client";
 
 import { login } from "@/actions/auth";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [state, action, isPending] = useActionState(login, undefined);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (state?.success && state?.redirectUrl) {
+      router.push(state.redirectUrl);
+    }
+  }, [state, router]);
+
   return (
     <div className="container md:w-full mx-auto min-h-screen flex flex-col justify-center items-center ">
       <div className="login-card ">
