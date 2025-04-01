@@ -17,7 +17,9 @@ export default function ProjectCard({ project, path }) {
       >
         <div>
           <Link href={`/${path}/show/${project.id.toString()}`}>
-            <h3 className="pointer dark:text-white title">{project.title}</h3>
+            <h3 className="pointer text-white dark:text-white title">
+              {project.title}
+            </h3>
           </Link>
           <p className="text-slate-400 text-sm mb-2 truncate">
             {project.content}

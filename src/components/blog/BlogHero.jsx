@@ -15,7 +15,7 @@ export default function BlogHero({ post, userOwns, type }) {
 
   return (
     <div
-      className="relative aspect-video flex flex-col items-center justify-center max-w-7xl w-[1400px] rounded-xl mx-auto dark:bg-[var(--color-primary-500)] z-1"
+      className="relative aspect-video flex flex-col items-center justify-center max-w-7xl w-[1400px] rounded-b-xl mx-auto bg-[var(--color-primary-100)] dark:bg-[var(--color-primary-500)] z-1"
       style={{
         backgroundImage: post?.featImageName
           ? `url('/uploads/${post?.featImageName}')`
@@ -25,8 +25,8 @@ export default function BlogHero({ post, userOwns, type }) {
         backgroundSize: "cover",
       }}
     >
-      <div className="absolute inset-0 bg-black/50 bg-gradient-to-b from-[var(--color-background-dark)]/100 to-transparent"></div>
-      <div className="relative z-10 p-4 flex flex-col items-center justify-center">
+      <div className="absolute inset-0 bg-black/50 bg-gradient-to-b from-[var(--color-background-dark)]/100 to-transparent rounded-b-xl"></div>
+      <div className="relative z-10 p-4 flex flex-col items-center justify-center ">
         {userOwns && (
           <Link
             href={`/dashboard/${type}/edit/${post.id.toString()}`}
