@@ -53,7 +53,7 @@ jobs:
         run: npx prisma generate
 
       - name: Wait for DB to be ready
-        run: sleep 20
+        run: sleep 100
 
       - name: Migrate database
         run: npx prisma migrate deploy
