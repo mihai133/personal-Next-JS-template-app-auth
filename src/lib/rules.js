@@ -30,11 +30,21 @@ export const LoginFormSchema = z.object({
 });
 
 export const BlogPostSchema = z.object({
+  metaTitle: z
+    .string()
+    .min(1, { message: "Meta Title is required" })
+    .max(70, { message: "Meta Title cannot be longer than 70 characters" }),
+  metaDesc: z
+    .string()
+    .min(1, { message: "Meta Description is required" })
+    .max(150, {
+      message: "Meta Description cannot be longer than 150 characters",
+    }),
   title: z
     .string()
     .trim()
     .min(1, { message: "Title is required" })
-    .max(50, { message: "Title cannot be longer than 50 characters" }),
+    .max(100, { message: "Title cannot be longer than 50 characters" }),
   content: z.string().min(1, { message: "Content is required" }).trim(),
 });
 

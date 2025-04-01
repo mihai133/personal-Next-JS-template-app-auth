@@ -1,5 +1,6 @@
 import LoadingArticles from "@/components/LoadingArticles";
 import Navigation from "@/components/Navigation";
+import PrivateNavItems from "@/components/PrivateNavItems";
 import { Suspense } from "react";
 
 export const metadata = {
@@ -12,7 +13,7 @@ export default async function ProjectsLayout({ children }) {
   return (
     <>
       <header className="sticky top-3 left-0">
-        <Navigation />
+        <Navigation serverComponent={<PrivateNavItems />} />
       </header>
       <Suspense fallback={<LoadingArticles title={"Projects"} />}>
         <main className=" mx-auto min-h-screen px-3 lg:px-0">{children}</main>

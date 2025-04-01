@@ -9,6 +9,24 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: mydb
+        ports:
+          - "5432:5432"
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://postgres:${{ secrets.POSTGRES_PASSWORD }}@postgres:5432/mydb?schema=public
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -31,8 +49,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Generate Prisma client
+        run: npx prisma generate
+
+      - name: Migrate database
+        run: npx prisma migrate deploy
+
       - name: Set DB_URI environment variable
-        run: echo "DB_URI=${{ secrets.DB_URI }}" >> $GITHUB_ENV
+        run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
 
       - name: Build Next.js app
         run: npm run build

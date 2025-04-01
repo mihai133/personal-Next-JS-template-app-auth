@@ -1,9 +1,8 @@
 import PostCard from "@/components/blog/PostCard";
-import { getCollection } from "@/lib/db";
+import prisma, { getCollection } from "@/lib/db";
 
 export default async function BlogPage() {
-  const postsCollection = await getCollection("posts");
-  const posts = await postsCollection?.find().sort({ $natural: -1 }).toArray();
+  const posts = await prisma.post.findMany();
 
   if (!posts) {
     return <div className="text-white">Failed to load posts</div>;
@@ -14,7 +13,7 @@ export default async function BlogPage() {
       <h1>Blog</h1>
       {posts.length > 0 ? (
         posts.map((post) => (
-          <div key={post._id.toString()}>
+          <div key={post.id.toString()}>
             <PostCard path={"posts"} post={post} />
           </div>
         ))

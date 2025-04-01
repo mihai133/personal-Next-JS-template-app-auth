@@ -1,14 +1,17 @@
 import { deleteProject } from "@/actions/projects";
-import { getCollection } from "@/lib/db";
+import prisma, { getCollection } from "@/lib/db";
 import Link from "next/link";
 import DeleteActionButton from "@/components/DeleteActionButton";
+import getAuthUser from "@/lib/getAuthUser";
 
 export default async function DashboardProjectsPage() {
-  const projectsCollection = await getCollection("projects");
-  const projects = await projectsCollection
-    ?.find()
-    .sort({ $natural: -1 })
-    .toArray();
+  const user = await getAuthUser();
+
+  const projects = await prisma.project.findMany({
+    where: {
+      userId: user.userId,
+    },
+  });
 
   return (
     <>
@@ -34,9 +37,9 @@ export default async function DashboardProjectsPage() {
           </thead>
           <tbody>
             {projects.length > 0 ? (
-              projects.map((project) => (
+              projects?.map((project) => (
                 <tr
-                  key={project._id}
+                  key={project.id}
                   className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200"
                 >
                   <th
@@ -44,7 +47,7 @@ export default async function DashboardProjectsPage() {
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
                     <Link
-                      href={`/dashboard/projects/show/${project._id.toString()}`}
+                      href={`/dashboard/projects/show/${project.id.toString()}`}
                     >
                       {project.title}
                     </Link>
@@ -52,13 +55,13 @@ export default async function DashboardProjectsPage() {
 
                   <td className="px-6 py-4 flex flex-row space-x-4">
                     <Link
-                      href={`/dashboard/projects/show/${project._id.toString()}`}
+                      href={`/dashboard/projects/show/${project.id.toString()}`}
                       className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                     >
                       View
                     </Link>
                     <Link
-                      href={`/dashboard/projects/edit/${project._id.toString()}`}
+                      href={`/dashboard/projects/edit/${project.id.toString()}`}
                       className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                     >
                       Edit
@@ -66,7 +69,7 @@ export default async function DashboardProjectsPage() {
                     <DeleteActionButton
                       action={deleteProject}
                       name={"projectId"}
-                      value={project._id.toString()}
+                      value={project.id.toString()}
                       label="Delete"
                     />
                   </td>
