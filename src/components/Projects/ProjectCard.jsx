@@ -4,7 +4,6 @@ import Link from "next/link";
 import { StarIcon } from "@heroicons/react/24/outline";
 
 export default function ProjectCard({ project, path }) {
-  console.log(project.featured);
   return (
     <>
       <OverlayCard

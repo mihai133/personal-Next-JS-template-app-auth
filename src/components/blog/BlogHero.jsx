@@ -38,7 +38,7 @@ export default function BlogHero({ post, userOwns, type }) {
 
         <div className="flex flex-col items-center justify-center text-white space-y-4">
           <GoBackButton label={backButtonType} />
-          <h1 className=" text-4xl font-bold text-white">
+          <h1 className="text-4xl text-center text-pretty font-bold text-white">
             {post?.title || "Post not found"}
           </h1>
           <div>

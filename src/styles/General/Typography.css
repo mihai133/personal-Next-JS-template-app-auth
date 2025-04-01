@@ -41,7 +41,7 @@ Generate a typography scale
 h1 {
   font-size: clamp(1.8rem, 3.5vw, 4rem);
   font-weight: 800;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.02em;
 }
 
 h2 {
