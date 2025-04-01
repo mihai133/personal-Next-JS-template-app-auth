@@ -1,5 +1,6 @@
 import LoadingArticles from "@/components/LoadingArticles";
 import Navigation from "@/components/Navigation";
+import PrivateNavItems from "@/components/PrivateNavItems";
 import { Suspense } from "react";
 
 export const metadata = {
@@ -11,8 +12,8 @@ export const metadata = {
 export default function BlogLayout({ children }) {
   return (
     <>
-      <header className="sticky top-3 left-0">
-        <Navigation />
+      <header className="sticky top-3 left-0 z-10">
+        <Navigation serverComponent={<PrivateNavItems />} />
       </header>
       <Suspense fallback={<LoadingArticles title={"Blog"} />}>
         <main className="mx-auto  min-h-screen px-3 lg:px-0">{children}</main>

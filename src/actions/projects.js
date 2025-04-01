@@ -1,9 +1,8 @@
 "use server";
 
-import { getCollection } from "@/lib/db";
+import prisma from "@/lib/db";
 import getAuthUser from "@/lib/getAuthUser";
 import { ProjectSchema } from "@/lib/projectRules";
-import { ObjectId } from "mongodb";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -15,35 +14,48 @@ export async function createProject(state, formData) {
   }
 
   // Validate the form fields
+  const metaTitle = formData.get("metaTitle");
+  const metaDesc = formData.get("metaDesc");
   const title = formData.get("title");
   const content = formData.get("content");
+  const featured = formData.get("featured") ? true : false;
 
   const validatedField = ProjectSchema.safeParse({
+    metaTitle,
+    metaDesc,
     title,
     content,
+    featured,
   });
   // If any form fields are invalid
   if (!validatedField.success) {
     return {
       errors: validatedField.error.flatten().fieldErrors,
+      metaTitle,
+      metaDesc,
       title,
       content,
+      featured,
     };
   }
 
   // Save the project to the database
   try {
-    const projectsCollection = await getCollection("projects");
-    const project = {
-      title: validatedField.data.title,
-      content: validatedField.data.content,
-      userId: ObjectId.createFromHexString(user.userId),
-    };
-
-    await projectsCollection.insertOne(project);
+    await prisma.project.create({
+      data: {
+        metaTitle: validatedField.data.metaTitle,
+        metaDesc: validatedField.data.metaDesc,
+        title: validatedField.data.title,
+        content: validatedField.data.content,
+        featured: validatedField.data.featured,
+        userId: user.userId,
+      },
+    });
   } catch (error) {
     return {
       errors: { title: error.message },
+      title: title,
+      content: content,
     };
   }
 
@@ -58,47 +70,55 @@ export async function updateProject(state, formData) {
   if (!user) return redirect("/");
 
   // Validate the form fields
+  const projectId = formData.get("projectId");
+  const metaTitle = formData.get("metaTitle");
+  const metaDesc = formData.get("metaDesc");
   const title = formData.get("title");
   const content = formData.get("content");
-  const projectId = formData.get("projectId");
+  const featured = formData.get("featured") ? true : false;
 
   const validatedField = ProjectSchema.safeParse({
+    metaTitle,
+    metaDesc,
     title,
     content,
+    featured,
   });
 
   // If any form fields are invalid
   if (!validatedField.success) {
     return {
       errors: validatedField.error.flatten().fieldErrors,
-      title,
-      content,
+      metaTitle: metaTitle,
+      metaDesc: metaDesc,
+      title: title,
+      content: content,
+      featured: featured,
+    };
+  }
+  // Find the project
+  try {
+    await prisma.project.update({
+      where: {
+        id: projectId,
+      },
+      data: {
+        metaTitle: validatedField.data.metaTitle,
+        metaDesc: validatedField.data.metaDesc,
+        title: validatedField.data.title,
+        content: validatedField.data.content,
+        featured: validatedField.data.featured,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return {
+      errors: { title: "Failed to update project" },
     };
   }
 
-  // Find the project
-  const projectsCollection = await getCollection("projects");
-  const project = await projectsCollection.findOne({
-    _id: ObjectId.createFromHexString(projectId),
-  });
-
-  // Check if the user owns the project
-  if (user.userId !== project.userId.toString()) return redirect("/");
-
-  // Update the project in the database
-  projectsCollection.findOneAndUpdate(
-    {
-      _id: project._id,
-    },
-    {
-      $set: {
-        title: validatedField.data.title,
-        content: validatedField.data.content,
-      },
-    }
-  );
-
   // Revalidate path
+  revalidatePath("/dashboard/projects");
   redirect("/dashboard/projects");
 }
 
@@ -107,21 +127,20 @@ export async function deleteProject(formData) {
   const user = await getAuthUser();
   if (!user) return redirect("/");
 
-  // Find the project
-  const projectsCollection = await getCollection("projects");
-  const project = await projectsCollection.findOne({
-    _id: ObjectId.createFromHexString(formData.get("projectId")),
-  });
+  const projectId = formData.get("projectId");
 
-  // Check if the user owns the project
-  if (user.userId !== project.userId.toString()) return redirect("/");
-
-  // Delete the project
-  projectsCollection
-    .findOneAndDelete({
-      _id: project._id,
-    })
-    .then(() => {
-      revalidatePath("/dashboard/projects");
+  try {
+    // Delete the project
+    await prisma.project.delete({
+      where: {
+        id: projectId,
+      },
     });
+    revalidatePath("/dashboard/projects");
+  } catch (error) {
+    console.error(error);
+    return {
+      errors: { title: "Failed to delete project" },
+    };
+  }
 }
