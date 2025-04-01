@@ -29,9 +29,14 @@ model Post {
 }
 
 model Project {
-  id      String @id @default(uuid())
-  title   String
-  content String
-  userId  String
-  user    User   @relation(fields: [userId], references: [id])
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  metaTitle String?
+  metaDesc  String?
+  userId    String
+  featured  Boolean  @default(false)
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @default(now()) @updatedAt
 }

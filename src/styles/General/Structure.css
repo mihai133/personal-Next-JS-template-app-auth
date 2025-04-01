@@ -46,7 +46,7 @@ textarea {
 }
 
 label {
-  @apply block text-sm font-medium leading-6 text-slate-600 first-letter:capitalize;
+  @apply block text-sm font-medium leading-6  first-letter:capitalize;
 
   @apply mt-2;
 }

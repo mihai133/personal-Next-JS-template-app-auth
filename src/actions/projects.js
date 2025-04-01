@@ -14,19 +14,28 @@ export async function createProject(state, formData) {
   }
 
   // Validate the form fields
+  const metaTitle = formData.get("metaTitle");
+  const metaDesc = formData.get("metaDesc");
   const title = formData.get("title");
   const content = formData.get("content");
+  const featured = formData.get("featured") ? true : false;
 
   const validatedField = ProjectSchema.safeParse({
+    metaTitle,
+    metaDesc,
     title,
     content,
+    featured,
   });
   // If any form fields are invalid
   if (!validatedField.success) {
     return {
       errors: validatedField.error.flatten().fieldErrors,
+      metaTitle,
+      metaDesc,
       title,
       content,
+      featured,
     };
   }
 
@@ -34,8 +43,11 @@ export async function createProject(state, formData) {
   try {
     await prisma.project.create({
       data: {
+        metaTitle: validatedField.data.metaTitle,
+        metaDesc: validatedField.data.metaDesc,
         title: validatedField.data.title,
         content: validatedField.data.content,
+        featured: validatedField.data.featured,
         userId: user.userId,
       },
     });
@@ -58,33 +70,44 @@ export async function updateProject(state, formData) {
   if (!user) return redirect("/");
 
   // Validate the form fields
+  const projectId = formData.get("projectId");
+  const metaTitle = formData.get("metaTitle");
+  const metaDesc = formData.get("metaDesc");
   const title = formData.get("title");
   const content = formData.get("content");
-  const projectId = formData.get("projectId");
+  const featured = formData.get("featured") ? true : false;
 
   const validatedField = ProjectSchema.safeParse({
+    metaTitle,
+    metaDesc,
     title,
     content,
+    featured,
   });
 
   // If any form fields are invalid
   if (!validatedField.success) {
     return {
       errors: validatedField.error.flatten().fieldErrors,
-      title,
-      content,
+      metaTitle: metaTitle,
+      metaDesc: metaDesc,
+      title: title,
+      content: content,
+      featured: featured,
     };
   }
-
   // Find the project
   try {
-    const project = await prisma.project.update({
+    await prisma.project.update({
       where: {
         id: projectId,
       },
       data: {
+        metaTitle: validatedField.data.metaTitle,
+        metaDesc: validatedField.data.metaDesc,
         title: validatedField.data.title,
         content: validatedField.data.content,
+        featured: validatedField.data.featured,
       },
     });
   } catch (error) {

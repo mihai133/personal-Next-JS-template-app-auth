@@ -22,7 +22,7 @@ export default async function EditDashboardProject({ params }) {
   }
 
   return (
-    <div>
+    <div className="container md:w-1/2 mx-auto">
       <h1>Update Project</h1>
       {project ? (
         <Form handler={updateProject} post={project} type="Project" />

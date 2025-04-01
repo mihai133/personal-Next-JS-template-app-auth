@@ -1,6 +1,11 @@
 "use client";
 
-import { PencilIcon } from "@heroicons/react/24/outline";
+import {
+  CheckBadgeIcon,
+  CheckCircleIcon,
+  CheckIcon,
+  PencilIcon,
+} from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { useActionState, useRef, useState, useEffect } from "react";
 
@@ -40,6 +45,30 @@ export default function Form({ handler, post, type, images }) {
           defaultValue={state?.content || post?.content}
         />
       </div>
+
+      {type === "Project" && (
+        <div className="relative">
+          <input
+            type="checkbox"
+            id="featured"
+            name="featured"
+            defaultChecked={state?.featured || post?.featured}
+            className="hidden peer"
+          />
+          <label
+            htmlFor="featured"
+            className="flex flex-row items-center justify-between p-5 text-gray-200 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 dark:peer-checked:border-[var(--color-primary-400)] hover:text-gray-600 dark:peer-checked:text-gray-200 dark:peer-checked:bg-[var(--color-primary-600)] peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-500 dark:bg-gray-800 dark:hover:bg-gray-700"
+          >
+            <div className="flex flex-col w-fit">
+              <div className="w-full text-lg font-semibold">Featured post</div>
+              <div className="w-full text-sm">
+                A JavaScript library for building user interfaces.
+              </div>
+            </div>
+          </label>
+          <CheckIcon className="absolute right-6 top-6 w-10 h-10 dark:peer-checked:text-[var(--color-primary-100)] dark:text-gray-500" />
+        </div>
+      )}
 
       {post?.featImageName && (
         <Image
@@ -94,6 +123,7 @@ export default function Form({ handler, post, type, images }) {
           />
         </label>
       </div>
+
       <hr className="border-gray-200 dark:border-gray-700" />
       <h3>SEO</h3>
       <div className="flex flex-col gap-4">
