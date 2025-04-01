@@ -53,7 +53,7 @@ jobs:
         run: npx prisma generate
 
       - name: Wait for DB to be ready
-        run: sleep 100
+        run: chmod +x wait-for-db.sh && ./wait-for-db.sh
 
       - name: Migrate database
         run: npx prisma migrate deploy
