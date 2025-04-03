@@ -30,6 +30,7 @@ export default async function ShowPublicPost({ params }) {
       id: id,
     },
   });
+
   return (
     <>
       {post ? (

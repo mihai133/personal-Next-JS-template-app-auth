@@ -9,18 +9,20 @@ datasource db {
 }
 
 model User {
-  id       String    @id @default(uuid())
-  email    String    @unique
-  password String
-  posts    Post[]
-  projects Project[]
+  id        String    @id @default(uuid()) @db.Uuid // Add @db.Uuid
+  email     String
+  password  String
+  posts     Post[]
+  projects  Project[]
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime  @default(now()) @updatedAt
 }
 
 model Post {
-  id            String   @id @default(uuid())
+  id            String   @id @default(uuid()) @db.Uuid // Add @db.Uuid
   title         String
   content       String
-  userId        String
+  userId        String   @db.Uuid //Add @db.Uuid
   featImageName String
   metaTitle     String?
   metaDesc      String?
@@ -30,12 +32,12 @@ model Post {
 }
 
 model Project {
-  id        String   @id @default(uuid())
+  id        String   @id @default(uuid()) @db.Uuid // Add @db.Uuid
   title     String
   content   String
   metaTitle String?
   metaDesc  String?
-  userId    String
+  userId    String   @db.Uuid //Add @db.Uuid
   featured  Boolean  @default(false)
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now()) @db.Timestamptz(6)

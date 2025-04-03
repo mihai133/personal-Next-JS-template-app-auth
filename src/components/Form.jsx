@@ -122,6 +122,7 @@ export default function Form({ handler, post, type, images }) {
             defaultValue={post?.featImageName}
           />
         </label>
+        {state?.errors?.file && <p className="error">{state?.errors?.file}</p>}
       </div>
 
       <hr className="border-gray-200 dark:border-gray-700" />
