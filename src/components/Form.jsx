@@ -1,17 +1,21 @@
 "use client";
 
-import {
-  CheckBadgeIcon,
-  CheckCircleIcon,
-  CheckIcon,
-  PencilIcon,
-} from "@heroicons/react/24/outline";
+import { CheckIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import { useActionState, useRef, useState, useEffect } from "react";
+import { useActionState, useState } from "react";
 
 export default function Form({ handler, post, type, images }) {
-  const [state, action, isPending] = useActionState(handler, undefined);
+  const [formData, setFormData] = useState(null || post);
+  const [state, action, isPending] = useActionState(handler, formData);
 
+  function handleChange(e) {
+    if (e.target.name === "file") {
+      const file = e.target.files[0];
+      setFormData({ ...formData, file: file });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
+  }
   return (
     <form action={action} className="space-y-4">
       <input
@@ -28,6 +32,7 @@ export default function Form({ handler, post, type, images }) {
           type="text"
           name="title"
           placeholder="Title"
+          onChange={handleChange}
           defaultValue={state?.title || post?.title}
         />
         {state?.errors?.title && (
@@ -42,6 +47,7 @@ export default function Form({ handler, post, type, images }) {
           name="content"
           placeholder="Content"
           rows={12}
+          onChange={handleChange}
           defaultValue={state?.content || post?.content}
         />
       </div>
@@ -70,9 +76,18 @@ export default function Form({ handler, post, type, images }) {
         </div>
       )}
 
+      {formData?.file && (
+        <Image
+          src={URL.createObjectURL(formData?.file)}
+          alt="Image Preview"
+          className="relative w-full aspect-video object-cover rounded-lg"
+          width={600}
+          height={400}
+        />
+      )}
       {post?.featImageName && (
         <Image
-          src={post?.featImageName ? `/uploads/${post?.featImageName}` : null}
+          src={post?.featImageName?.publicUrl}
           alt="Image Preview"
           className="relative w-full aspect-video object-cover rounded-lg"
           width={600}
@@ -113,13 +128,7 @@ export default function Form({ handler, post, type, images }) {
             type="file"
             className="hidden"
             name="file"
-          />
-
-          <input
-            id="file-name"
-            type="hidden"
-            name="existingFeatImageName"
-            defaultValue={post?.featImageName}
+            onChange={handleChange}
           />
         </label>
         {state?.errors?.file && <p className="error">{state?.errors?.file}</p>}
@@ -135,6 +144,7 @@ export default function Form({ handler, post, type, images }) {
           type="text"
           name="metaTitle"
           placeholder="Meta Title"
+          onChange={handleChange}
           defaultValue={state?.metaTitle || post?.metaTitle}
         />
         {state?.errors?.metaTitle && (
@@ -149,6 +159,7 @@ export default function Form({ handler, post, type, images }) {
         <textarea
           name="metaDesc"
           placeholder="Meta Description"
+          onChange={handleChange}
           defaultValue={state?.metaDesc || post?.metaDesc}
           rows={6}
         />

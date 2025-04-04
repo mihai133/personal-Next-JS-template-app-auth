@@ -5,14 +5,6 @@ import supabase from "@/lib/storage";
 import Link from "next/link";
 
 export default async function HomePage() {
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
-
-  // const user = await getAuthUser();
-  console.log(user);
-
   return (
     <>
       <Particles

@@ -6,6 +6,7 @@ import { BlogPostSchema } from "@/lib/rules";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { uploadFile } from "./uploadFile";
+import { createServerComponentClient } from "@/lib/supabase/supabaseServer";
 
 export async function createBlogPost(state, formData) {
   // Check if the user is authenticated
@@ -48,15 +49,12 @@ export async function createBlogPost(state, formData) {
       if (uploadResult?.error) {
         return {
           errors: { file: uploadResult.error },
-          title: title,
-          content: content,
         };
       }
-      console.log(uploadResult);
+
       featImageName = uploadResult?.name;
     }
-    console.log("IMAGE NAME", typeof featImageName, featImageName);
-    // return;
+
     await prisma.post.create({
       data: {
         metaTitle: validatedField.data.metaTitle,
@@ -75,6 +73,7 @@ export async function createBlogPost(state, formData) {
       metaDesc: metaDesc,
       title: title,
       content: content,
+      file: file,
     };
   }
   // Redirect to the dashboard
@@ -83,6 +82,7 @@ export async function createBlogPost(state, formData) {
 }
 
 export async function updatePost(state, formData) {
+  const supabase = await createServerComponentClient();
   // Check if the user is authenticated
   const user = await getAuthUser();
   if (!user) return redirect("/");
@@ -169,6 +169,7 @@ export async function deletePost(formData) {
 
   try {
     // Delete the post
+    // TODO: delete image of the Post
     await prisma.post.delete({
       where: {
         id: postId,

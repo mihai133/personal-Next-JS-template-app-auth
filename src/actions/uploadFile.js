@@ -7,21 +7,17 @@ import { cookies } from "next/headers";
 import { createServerComponentClient } from "../lib/supabase/supabaseServer";
 
 export async function uploadFile(file) {
-  const arrayBuffer = await file.arrayBuffer();
-  const buffer = new Uint8Array(arrayBuffer);
+  // const arrayBuffer = await file.arrayBuffer();
+  // const buffer = new Uint8Array(arrayBuffer);
 
   const supabase = await createServerComponentClient();
 
-  console.log(file);
-
   // await fs.writeFile(`./public/uploads/${file.name}`, buffer);
-  const { data, error } = await supabase.storage
+  const { data, error } = supabase.storage
     .from("uploads")
-    .upload(`${file.name}`, buffer, {
+    .upload(`public/${file.name}`, file, {
       cacheControl: "3600",
       upsert: true,
     });
-  console.log(data);
-  console.log(error);
   return file;
 }
