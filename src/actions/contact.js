@@ -29,11 +29,13 @@ export async function sendMessage(state, formData) {
   try {
     await sendMail(name, email, message);
 
-    return { successMessage: "Message sent successfully" };
+    return {
+      successMessage: "Message sent successfully",
+      redirectUrl: "/contact",
+    };
   } catch (error) {
     return { errors: { message: "Failed to send message" } };
   }
 
   // Redirect to the dashboard
-  revalidatePath("/contact");
 }
