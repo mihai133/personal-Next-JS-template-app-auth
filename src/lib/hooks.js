@@ -3,7 +3,7 @@ import { useState } from "react";
 export const useUploadFile = (maxFiles = 10) => {
   const [files, setFile] = useState([]);
   const [message, setMessage] = useState();
-  console.log(files);
+
   const handleFile = (e) => {
     setMessage("");
     const fileArr = [...e.target.files];

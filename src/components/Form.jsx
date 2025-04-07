@@ -10,15 +10,7 @@ export default function Form({ handler, post, type, images }) {
   const [files, setFile, message, handleFile, removeImage] = useUploadFile(1);
   const [state, action, isPending] = useActionState(handler, null);
 
-  function handleChange(e) {
-    if (e.target.name === "file") {
-      const file = e.target.files[0];
-      setFile({ ...formData, file: file });
-    } else {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
-    }
-  }
-
+  console.log(post);
   return (
     <form action={action} className="space-y-4">
       {post && (
@@ -57,18 +49,26 @@ export default function Form({ handler, post, type, images }) {
         />
       )}
 
-      {post?.featImageName && (
-        <Image
-          src={post?.featImageName?.publicUrl}
-          alt="Image Preview"
-          className=" w-full aspect-video object-cover rounded-lg"
-          width={600}
-          height={400}
-        />
+      {!!post?.featImage && (
+        <>
+          <Image
+            src={post?.featImage?.publicUrl}
+            alt="Image Preview"
+            edi
+            className=" w-full aspect-video object-cover rounded-lg"
+            width={600}
+            height={400}
+          />
+          <input
+            defaultValue={post?.featImageName}
+            name="existingFeatImageName"
+          />
+        </>
       )}
+
       <FormField
         formType="file"
-        label="Featured post"
+        label="Featured Image (Optional)"
         name="files[]"
         state={state}
         post={post}

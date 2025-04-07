@@ -42,8 +42,8 @@ export async function createBlogPost(state, formData) {
 
   // Save the post to the database
   try {
-    let featImageName = null;
-    if (file) {
+    let featImageName;
+    if (file.length > 0) {
       // Upload the file
       const uploadResult = await uploadFile(file);
       if (uploadResult?.error) {
@@ -51,7 +51,6 @@ export async function createBlogPost(state, formData) {
           errors: { file: uploadResult.error },
         };
       }
-
       featImageName = uploadResult?.name;
     }
 

@@ -28,7 +28,7 @@ export default async function Edit({ params }) {
 
   const post = {
     ...postData,
-    featImageName: featuredImageFromSupabase,
+    featImage: postData?.featImageName && featuredImageFromSupabase,
   };
 
   return (
