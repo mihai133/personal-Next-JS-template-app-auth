@@ -3,40 +3,43 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
-  id       String    @id @default(uuid())
-  email    String    @unique
-  password String
-  posts    Post[]
-  projects Project[]
+  email     String
+  password  String
+  id        String    @id @default(uuid()) @db.Uuid
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime  @default(now()) @updatedAt
+  posts     Post[]
+  projects  Project[]
 }
 
 model Post {
-  id            String   @id @default(uuid())
   title         String
   content       String
-  userId        String
-  featImageName String
+  featImageName String?
   metaTitle     String?
   metaDesc      String?
-  user          User     @relation(fields: [userId], references: [id])
   createdAt     DateTime @default(now()) @db.Timestamptz(6)
   updatedAt     DateTime @default(now()) @updatedAt
+  id            String   @id @default(uuid()) @db.Uuid
+  userId        String   @db.Uuid
+  user          User     @relation(fields: [userId], references: [id])
 }
 
 model Project {
-  id        String   @id @default(uuid())
   title     String
   content   String
   metaTitle String?
   metaDesc  String?
-  userId    String
   featured  Boolean  @default(false)
-  user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now()) @db.Timestamptz(6)
   updatedAt DateTime @default(now()) @updatedAt
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id])
 }

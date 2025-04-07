@@ -1,15 +1,12 @@
 "use client";
 import {
   ArrowLeftIcon,
-  ArrowLeftStartOnRectangleIcon,
   Bars3Icon,
-  ChartBarIcon,
   ChartPieIcon,
   DocumentIcon,
   RectangleGroupIcon,
 } from "@heroicons/react/24/outline";
-import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
 import SidebarNavItem from "./SidebarNavItem";
 import LogoutButton from "./SidebarNavLogout";
 

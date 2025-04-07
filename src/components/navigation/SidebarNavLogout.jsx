@@ -1,9 +1,5 @@
 import { logout } from "@/actions/auth";
-import {
-  ArrowLeftEndOnRectangleIcon,
-  ArrowRightEndOnRectangleIcon,
-} from "@heroicons/react/24/outline";
-import React from "react";
+import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/outline";
 
 export default function LogoutButton() {
   return (

@@ -48,7 +48,8 @@ textarea {
 label {
   @apply block text-sm font-medium leading-6  first-letter:capitalize;
 
-  @apply mt-2;
+  @apply mt-2 mb-1;
+  @apply text-slate-400;
 }
 
 .post-content-container {

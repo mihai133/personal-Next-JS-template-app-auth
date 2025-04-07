@@ -6,6 +6,7 @@ import { BlogPostSchema } from "@/lib/rules";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { uploadFile } from "./uploadFile";
+import { createServerComponentClient } from "@/lib/supabase/supabaseServer";
 
 export async function createBlogPost(state, formData) {
   // Check if the user is authenticated
@@ -19,7 +20,7 @@ export async function createBlogPost(state, formData) {
   const metaDesc = formData.get("metaDesc");
   const title = formData.get("title");
   const content = formData.get("content");
-  const file = formData.get("file");
+  const file = formData.getAll("files[]")[0];
 
   const validatedField = BlogPostSchema.safeParse({
     metaTitle,
@@ -41,22 +42,18 @@ export async function createBlogPost(state, formData) {
 
   // Save the post to the database
   try {
-    let featImageName = null;
-    if (file) {
+    let featImageName;
+    if (file.length > 0) {
       // Upload the file
       const uploadResult = await uploadFile(file);
       if (uploadResult?.error) {
         return {
           errors: { file: uploadResult.error },
-          title: title,
-          content: content,
         };
       }
-      console.log(uploadResult);
       featImageName = uploadResult?.name;
     }
-    console.log("IMAGE NAME", typeof featImageName, featImageName);
-    // return;
+
     await prisma.post.create({
       data: {
         metaTitle: validatedField.data.metaTitle,
@@ -75,6 +72,7 @@ export async function createBlogPost(state, formData) {
       metaDesc: metaDesc,
       title: title,
       content: content,
+      file: file,
     };
   }
   // Redirect to the dashboard
@@ -83,6 +81,7 @@ export async function createBlogPost(state, formData) {
 }
 
 export async function updatePost(state, formData) {
+  const supabase = await createServerComponentClient();
   // Check if the user is authenticated
   const user = await getAuthUser();
   if (!user) return redirect("/");
@@ -93,7 +92,7 @@ export async function updatePost(state, formData) {
   const title = formData.get("title");
   const content = formData.get("content");
   const postId = formData.get("postId");
-  const file = formData.get("file");
+  const file = formData.getAll("files[]")[0];
   const existingFeatImageName = formData.get("existingFeatImageName");
 
   const validatedField = BlogPostSchema.safeParse({
@@ -116,8 +115,8 @@ export async function updatePost(state, formData) {
 
   // Find the post
   try {
+    let featImageName = null;
     if (!existingFeatImageName) {
-      let featImageName = null;
       if (file) {
         // Upload the file
         const uploadResult = await uploadFile(file);
@@ -169,6 +168,7 @@ export async function deletePost(formData) {
 
   try {
     // Delete the post
+    // TODO: delete image of the Post
     await prisma.post.delete({
       where: {
         id: postId,

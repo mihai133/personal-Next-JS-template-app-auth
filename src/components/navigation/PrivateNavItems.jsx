@@ -6,7 +6,6 @@ import { ArrowRightEndOnRectangleIcon } from "@heroicons/react/24/outline";
 import NavLink from "./NavLink";
 
 export default async function PrivateNavItems() {
-  console.log("PRivate");
   const authUser = await getAuthUser();
   return authUser ? (
     <>

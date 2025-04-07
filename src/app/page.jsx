@@ -1,5 +1,7 @@
 import { FadeIn } from "@/components/ui/FadeIn";
 import Particles from "@/components/ui/Particles";
+import getAuthUser from "@/lib/getAuthUser";
+import supabase from "@/lib/storage";
 import Link from "next/link";
 
 export default async function HomePage() {

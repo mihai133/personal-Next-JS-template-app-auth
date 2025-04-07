@@ -7,6 +7,7 @@ import Link from "next/link";
 
 export default async function DashboardPostsPage() {
   const user = await getAuthUser();
+
   const posts = await prisma.post.findMany({
     where: {
       userId: user.userId,

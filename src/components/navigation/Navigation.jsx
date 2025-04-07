@@ -1,9 +1,8 @@
 "use client";
 import NavLink from "./NavLink";
 import { Bars3Icon } from "@heroicons/react/24/outline";
-import PrivateNavItems from "./PrivateNavItems";
-import React, { useState } from "react";
-import MobileMenu from "./navigation/MobileMenu";
+import { useState } from "react";
+import MobileMenu from "./MobileMenu";
 
 export default function Navigation({ showHome, serverComponent }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
