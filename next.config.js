@@ -2,7 +2,10 @@
 const nextConfig = {
   distDir: "build",
   images: {
-    remotePatterns: [{ hostname: "adxidrieypeocutmghum.supabase.co" }],
+    remotePatterns: [
+      { hostname: "adxidrieypeocutmghum.supabase.co" },
+      { hostname: "127.0.0.1" },
+    ],
   },
 };
 

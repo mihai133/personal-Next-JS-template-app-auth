@@ -4,6 +4,7 @@ import React from "react";
 export default function FormField({
   formType,
   label,
+  name,
   handleChange,
   state,
   post,
@@ -17,7 +18,7 @@ export default function FormField({
           </label>
           <input
             type="text"
-            name="title"
+            name={name}
             placeholder="Title"
             onChange={handleChange}
             defaultValue={state?.title || post?.title}
@@ -34,7 +35,7 @@ export default function FormField({
             {label}
           </label>
           <textarea
-            name="content"
+            name={name}
             placeholder="Content"
             rows={12}
             onChange={handleChange}
@@ -103,7 +104,7 @@ export default function FormField({
               id="dropzone-file"
               type="file"
               className="hidden"
-              name="file"
+              name={name}
               onChange={handleChange}
               defaultValue={state?.file || post?.file}
             />

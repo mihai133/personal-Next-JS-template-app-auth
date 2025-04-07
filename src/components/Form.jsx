@@ -34,6 +34,7 @@ export default function Form({ handler, post, type, images }) {
       <FormField
         formType="text"
         label="Title"
+        name={`title`}
         handleChange={handleChange}
         state={state}
         post={post}
@@ -41,6 +42,7 @@ export default function Form({ handler, post, type, images }) {
       <FormField
         formType="textarea"
         label="Content"
+        name={`content`}
         handleChange={handleChange}
         state={state}
         post={post}
@@ -50,6 +52,7 @@ export default function Form({ handler, post, type, images }) {
         <FormField
           formType="checkbox"
           label="Featured post"
+          name={`featured`}
           handleChange={handleChange}
           state={state}
           post={post}
@@ -85,6 +88,7 @@ export default function Form({ handler, post, type, images }) {
       <FormField
         formType="file"
         label="Featured post"
+        name={`file`}
         handleChange={handleChange}
         state={state}
         post={post}
@@ -95,6 +99,7 @@ export default function Form({ handler, post, type, images }) {
       <FormField
         formType="text"
         label="Meta Title"
+        name={`metaTitle`}
         handleChange={handleChange}
         state={state}
         post={post}
@@ -102,6 +107,7 @@ export default function Form({ handler, post, type, images }) {
       <FormField
         formType="textarea"
         label="Meta Description"
+        name={`metaDesc`}
         handleChange={handleChange}
         state={state}
         post={post}

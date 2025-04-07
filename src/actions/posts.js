@@ -116,8 +116,8 @@ export async function updatePost(state, formData) {
 
   // Find the post
   try {
+    let featImageName = null;
     if (!existingFeatImageName) {
-      let featImageName = null;
       if (file) {
         // Upload the file
         const uploadResult = await uploadFile(file);

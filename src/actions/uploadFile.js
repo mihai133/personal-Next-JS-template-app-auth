@@ -15,7 +15,7 @@ export async function uploadFile(file) {
   // await fs.writeFile(`./public/uploads/${file.name}`, buffer);
   const { data, error } = supabase.storage
     .from("uploads")
-    .upload(`public/${file.name}`, file, {
+    .upload(`/public/${file.name}`, file, {
       cacheControl: "3600",
       upsert: true,
     });
