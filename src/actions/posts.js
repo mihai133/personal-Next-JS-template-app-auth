@@ -93,7 +93,7 @@ export async function updatePost(state, formData) {
   const title = formData.get("title");
   const content = formData.get("content");
   const postId = formData.get("postId");
-  const file = formData.get("file");
+  const file = formData.getAll("files[]")[0];
   const existingFeatImageName = formData.get("existingFeatImageName");
 
   const validatedField = BlogPostSchema.safeParse({
