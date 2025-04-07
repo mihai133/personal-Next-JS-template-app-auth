@@ -2,24 +2,28 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import GoBackButton from "../navigation/GoBackButton";
+import { createServerComponentClient } from "@/lib/supabase/supabaseServer";
 
-export default function BlogHero({ post, userOwns, type }) {
+export default async function BlogHero({ post, userOwns, type }) {
+  const supabase = await createServerComponentClient();
   const backButtonType =
     (type === "projects" && "Back to Projects") ||
     (type === "posts" && "Back to Blog") ||
     "Go Back";
 
-  const imgBg = post?.featImageName
-    ? `bg-[url('/uploads/${post?.featImageName}')] dark:bg-[url('/uploads/${post?.featImageName}')]`
-    : "bg-white dark:bg-[var(--color-primary-800)]";
+  const { data: featuredImage } = supabase.storage
+    .from("uploads")
+    .getPublicUrl(`public/${post?.featImageName}`);
+
+  const imageUrl = featuredImage
+    ? `url('${featuredImage?.publicUrl}')`
+    : `url('/uploads/${post?.featImageName}')`;
 
   return (
     <div
       className="relative aspect-video flex flex-col items-center justify-center max-w-7xl w-[1400px] rounded-b-xl mx-auto bg-[var(--color-primary-100)] dark:bg-[var(--color-primary-500)] z-1"
       style={{
-        backgroundImage: post?.featImageName
-          ? `url('/uploads/${post?.featImageName}')`
-          : "none",
+        backgroundImage: post?.featImageName ? imageUrl : "none",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",

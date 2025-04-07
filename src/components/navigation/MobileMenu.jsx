@@ -1,7 +1,7 @@
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import NavLink from "./NavLink";
 
-import NavLink from "../NavLink";
 // import TheWebfieldLogo from "/assets/TheWebFieldn_new_logo_black.png";
 
 export default function MobileMenu({

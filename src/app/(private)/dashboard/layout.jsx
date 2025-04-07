@@ -1,6 +1,6 @@
 import LoadingArticles from "@/components/LoadingArticles";
-import Navigation from "@/components/Navigation";
-import Sidebar from "@/components/Sidebar";
+import Navigation from "@/components/navigation/Navigation";
+import Sidebar from "@/components/navigation/Sidebar";
 import { Suspense } from "react";
 
 export const metadata = {

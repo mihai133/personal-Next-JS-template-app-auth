@@ -1,10 +1,7 @@
 "use client";
 
-import { logout } from "@/actions/auth";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
 
 export default function SidebarNavItem({ href, icon: Icon, label }) {
   const pathName = usePathname();

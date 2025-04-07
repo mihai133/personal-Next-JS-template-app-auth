@@ -1,6 +1,6 @@
 import LoadingArticles from "@/components/LoadingArticles";
-import Navigation from "@/components/Navigation";
-import PrivateNavItems from "@/components/PrivateNavItems";
+import Navigation from "@/components/navigation/Navigation";
+import PrivateNavItems from "@/components/navigation/PrivateNavItems";
 import { Suspense } from "react";
 
 export const metadata = {

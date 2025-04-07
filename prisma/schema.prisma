@@ -9,37 +9,37 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(uuid()) @db.Uuid // Add @db.Uuid
   email     String
   password  String
-  posts     Post[]
-  projects  Project[]
+  id        String    @id @default(uuid()) @db.Uuid
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   updatedAt DateTime  @default(now()) @updatedAt
+  posts     Post[]
+  projects  Project[]
 }
 
 model Post {
-  id            String   @id @default(uuid()) @db.Uuid // Add @db.Uuid
   title         String
   content       String
-  userId        String   @db.Uuid //Add @db.Uuid
-  featImageName String
+  featImageName String?
   metaTitle     String?
   metaDesc      String?
-  user          User     @relation(fields: [userId], references: [id])
   createdAt     DateTime @default(now()) @db.Timestamptz(6)
   updatedAt     DateTime @default(now()) @updatedAt
+  id            String   @id @default(uuid()) @db.Uuid
+  userId        String   @db.Uuid
+  user          User     @relation(fields: [userId], references: [id])
 }
 
 model Project {
-  id        String   @id @default(uuid()) @db.Uuid // Add @db.Uuid
   title     String
   content   String
   metaTitle String?
   metaDesc  String?
-  userId    String   @db.Uuid //Add @db.Uuid
   featured  Boolean  @default(false)
-  user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now()) @db.Timestamptz(6)
   updatedAt DateTime @default(now()) @updatedAt
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id])
 }
