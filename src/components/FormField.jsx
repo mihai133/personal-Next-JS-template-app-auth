@@ -1,4 +1,9 @@
-import { CheckIcon } from "@heroicons/react/24/outline";
+import {
+  CheckIcon,
+  CloudArrowUpIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
+import Image from "next/image";
 import React from "react";
 
 export default function FormField({
@@ -8,6 +13,10 @@ export default function FormField({
   handleChange,
   state,
   post,
+  files,
+  handleFile,
+  message,
+  removeImage,
 }) {
   switch (formType) {
     case "text":
@@ -71,27 +80,13 @@ export default function FormField({
 
     case "file":
       return (
-        <div className="flex items-center justify-center w-full">
+        <div className="flex flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg  bg-gray-50  dark:bg-gray-700  dark:border-gray-600    px-6">
           <label
             htmlFor="dropzone-file"
-            className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+            className="flex flex-col items-center justify-center w-full h-64 dark:hover:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 border-dashed hover:bg-gray-100 dark:hover:border-gray-500 dark:hover:bg-gray-600 cursor-pointer rounded-lg"
           >
-            <div className="flex flex-col items-center justify-center pt-5 pb-6">
-              <svg
-                className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 16"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.5 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                />
-              </svg>
+            <div className="flex flex-col items-center justify-center h-full gap-1">
+              <CloudArrowUpIcon className="h-10 w-10" />
               <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
                 <span className="font-semibold">Click to upload</span> or drag
                 and drop
@@ -103,12 +98,31 @@ export default function FormField({
             <input
               id="dropzone-file"
               type="file"
+              multiple={true}
               className="hidden"
               name={name}
-              onChange={handleChange}
+              onChange={handleFile}
               defaultValue={state?.file || post?.file}
             />
           </label>
+          <div className="flex flex-wrap w-full gap-2 mt-2">
+            {files.map((file, key) => {
+              return (
+                <div key={key} className="relative w-1/4 rounded-lg">
+                  <Image
+                    src={URL.createObjectURL(file)}
+                    alt="Image Preview"
+                    className="relative  aspect-video object-cover shadow-lg shadow-slate-700 dark:shadow-slate-800 rounded-lg"
+                    width={600}
+                    height={400}
+                  />
+                  <button onClick={() => removeImage(file.name)}>
+                    <XMarkIcon className="absolute right-2 top-1 w-10 h-10 dark:peer-checked:text-[var(--color-primary-100)] dark:text-white cursor-pointer" />
+                  </button>
+                </div>
+              );
+            })}
+          </div>
           {state?.errors?.file && (
             <p className="error">{state?.errors?.file}</p>
           )}

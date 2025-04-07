@@ -12,7 +12,6 @@ export default function ContactForm({
   state,
   isPending,
 }) {
-  console.log(state);
   return (
     <OverlayCard
       className={`flex flex-col justify-between ${

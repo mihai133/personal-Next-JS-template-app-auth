@@ -4,38 +4,37 @@ import { CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { useActionState, useState } from "react";
 import FormField from "./FormField";
+import { useUploadFile } from "@/lib/hooks";
 
 export default function Form({ handler, post, type, images }) {
-  const [formData, setFormData] = useState(null || post);
-  const [state, action, isPending] = useActionState(handler, formData);
+  const [files, setFile, message, handleFile, removeImage] = useUploadFile(1);
+  // const formAction = files ? handler.bind(null, files) : handler;
+  const [state, action, isPending] = useActionState(handler, null);
 
   function handleChange(e) {
     if (e.target.name === "file") {
       const file = e.target.files[0];
-      setFormData({ ...formData, file: file });
+      setFile({ ...formData, file: file });
     } else {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     }
   }
 
-  function handleRemoveImage() {
-    setFormData({ ...formData, file: null });
-  }
-
-  console.log(formData);
   return (
     <form action={action} className="space-y-4">
-      <input
-        type="hidden"
-        name={`${type.toLowerCase()}Id`}
-        defaultValue={`${post?.id}`}
-      />
+      {post && (
+        <input
+          type="hidden"
+          name={`${type.toLowerCase()}Id`}
+          defaultValue={`${post?.id}`}
+        />
+      )}
       <h3>Content</h3>
       <FormField
         formType="text"
         label="Title"
         name={`title`}
-        handleChange={handleChange}
+        // handleChange={handleChange}
         state={state}
         post={post}
       />
@@ -43,7 +42,7 @@ export default function Form({ handler, post, type, images }) {
         formType="textarea"
         label="Content"
         name={`content`}
-        handleChange={handleChange}
+        // // handleChange={handleChange}
         state={state}
         post={post}
       />
@@ -53,29 +52,28 @@ export default function Form({ handler, post, type, images }) {
           formType="checkbox"
           label="Featured post"
           name={`featured`}
-          handleChange={handleChange}
+          // // handleChange={handleChange}
           state={state}
           post={post}
         />
       )}
+      {/* 
+      {files &&
+        files?.map((file, key) => (
+          <div key={key} className="relative w-1/3 ">
+            <Image
+              src={URL.createObjectURL(file)}
+              alt="Image Preview"
+              className="relative  aspect-video object-cover rounded-lg"
+              width={600}
+              height={400}
+            />
+            <button onClick={(e) => removeImage(e)}>
+              <XMarkIcon className="absolute right-2 top-1 w-10 h-10 dark:peer-checked:text-[var(--color-primary-100)] dark:text-white" />
+            </button>
+          </div>
+        ))} */}
 
-      {formData?.file && (
-        <div className="relative">
-          <Image
-            src={URL.createObjectURL(formData?.file)}
-            alt="Image Preview"
-            className="relative w-full aspect-video object-cover rounded-lg"
-            width={600}
-            height={400}
-          />
-          <button
-            onClick={handleRemoveImage}
-            className="absolute top-0 right-0"
-          >
-            <XMarkIcon className="absolute right-6 top-6 w-10 h-10 dark:peer-checked:text-[var(--color-primary-100)] dark:text-white" />
-          </button>
-        </div>
-      )}
       {post?.featImageName && (
         <Image
           src={post?.featImageName?.publicUrl}
@@ -88,10 +86,13 @@ export default function Form({ handler, post, type, images }) {
       <FormField
         formType="file"
         label="Featured post"
-        name={`file`}
-        handleChange={handleChange}
+        name="files[]"
         state={state}
         post={post}
+        files={files}
+        handleFile={handleFile}
+        message={message}
+        removeImage={removeImage}
       />
 
       <hr className="border-gray-200 dark:border-gray-700" />
@@ -100,7 +101,7 @@ export default function Form({ handler, post, type, images }) {
         formType="text"
         label="Meta Title"
         name={`metaTitle`}
-        handleChange={handleChange}
+        // // handleChange={handleChange}
         state={state}
         post={post}
       />
@@ -108,7 +109,7 @@ export default function Form({ handler, post, type, images }) {
         formType="textarea"
         label="Meta Description"
         name={`metaDesc`}
-        handleChange={handleChange}
+        // // handleChange={handleChange}
         state={state}
         post={post}
       />
