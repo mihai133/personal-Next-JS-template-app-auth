@@ -76,7 +76,9 @@ export default async function DashboardProjectsPage() {
                 </tr>
               ))
             ) : (
-              <p>No posts found</p>
+              <tr>
+                <td>No posts found</td>
+              </tr>
             )}
           </tbody>
         </table>
