@@ -13,7 +13,7 @@ export async function uploadFile(file) {
   const supabase = await createServerComponentClient();
 
   // await fs.writeFile(`./public/uploads/${file.name}`, buffer);
-  console.log(file);
+
   if (file) {
     const { data, error } = supabase.storage
       .from("uploads")

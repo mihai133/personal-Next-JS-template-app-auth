@@ -10,7 +10,6 @@ export default function Form({ handler, post, type, images }) {
   const [files, setFile, message, handleFile, removeImage] = useUploadFile(1);
   const [state, action, isPending] = useActionState(handler, null);
 
-  console.log(post);
   return (
     <form action={action} className="space-y-4">
       {post && (

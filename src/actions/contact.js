@@ -12,7 +12,6 @@ export async function sendMessage(state, formData) {
     message: formData.get("message"),
   });
 
-  console.log(validatedFields);
   // If any form fields are invalid
   if (!validatedFields.success) {
     return {

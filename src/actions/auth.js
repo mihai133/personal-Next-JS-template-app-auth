@@ -19,7 +19,6 @@ export async function register(state, formData) {
 
   // If there are any validation errors, return them
   if (!validatedFields.success) {
-    console.log(validatedFields);
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       email: formData.get("email"),
@@ -39,7 +38,6 @@ export async function register(state, formData) {
       password: password,
     });
 
-    console.log(data);
     if (error) {
       console.log(error);
       return {
@@ -56,7 +54,6 @@ export async function register(state, formData) {
         password: password,
       },
     });
-    console.log("AuthUsers record created:", authUser); // Log authUser
 
     // // Then create User record, linking to AuthUsers
     // const user = await prisma.user.create({
@@ -127,7 +124,6 @@ export async function login(state, formData) {
 
     // if (!matchedPassword) return { errors: { email: "Invalid credentials!" } };
 
-    console.log("DATA", data);
     // Create a session
     await createSession(data.user.id);
 
