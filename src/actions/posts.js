@@ -20,7 +20,7 @@ export async function createBlogPost(state, formData) {
   const metaDesc = formData.get("metaDesc");
   const title = formData.get("title");
   const content = formData.get("content");
-  const file = formData.getAll("files[]")[0];
+  const file = formData.get("file");
 
   const validatedField = BlogPostSchema.safeParse({
     metaTitle,
@@ -43,7 +43,7 @@ export async function createBlogPost(state, formData) {
   // Save the post to the database
   try {
     let featImageName;
-    if (file.length > 0) {
+    if (file) {
       // Upload the file
       const uploadResult = await uploadFile(file);
       if (uploadResult?.error) {
@@ -92,7 +92,7 @@ export async function updatePost(state, formData) {
   const title = formData.get("title");
   const content = formData.get("content");
   const postId = formData.get("postId");
-  const file = formData.getAll("files[]")[0];
+  const file = formData.get("file");
   const existingFeatImageName = formData.get("existingFeatImageName");
 
   const validatedField = BlogPostSchema.safeParse({
@@ -115,7 +115,7 @@ export async function updatePost(state, formData) {
 
   // Find the post
   try {
-    let featImageName = null;
+    let featImageName;
     if (!existingFeatImageName) {
       if (file) {
         // Upload the file
@@ -123,11 +123,8 @@ export async function updatePost(state, formData) {
         if (uploadResult?.error) {
           return {
             errors: { file: uploadResult.error },
-            title: title,
-            content: content,
           };
         }
-
         featImageName = uploadResult?.name;
       }
     }

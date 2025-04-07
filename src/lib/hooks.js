@@ -6,7 +6,7 @@ export const useUploadFile = (maxFiles = 10) => {
 
   const handleFile = (e) => {
     setMessage("");
-    const fileArr = [...e.target.files];
+    const fileArr = e.target.files;
     setFile(files);
 
     for (let i = 0; i < fileArr.length; i++) {

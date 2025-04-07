@@ -10,7 +10,10 @@ export default function FormField({
   formType,
   label,
   name,
+  placeholder,
   handleChange,
+  defaultValue,
+  errors,
   state,
   post,
   files,
@@ -28,13 +31,11 @@ export default function FormField({
           <input
             type="text"
             name={name}
-            placeholder="Title"
+            placeholder={placeholder}
             onChange={handleChange}
-            defaultValue={state?.title || post?.title}
+            defaultValue={defaultValue}
           />
-          {state?.errors?.title && (
-            <p className="error">{state?.errors?.title}</p>
-          )}
+          {errors && <p className="error">{errors}</p>}
         </div>
       );
     case "textarea":
@@ -45,11 +46,12 @@ export default function FormField({
           </label>
           <textarea
             name={name}
-            placeholder="Content"
+            placeholder={placeholder}
             rows={12}
             onChange={handleChange}
-            defaultValue={state?.content || post?.content}
+            defaultValue={defaultValue}
           />
+          {errors && <p className="error">{errors}</p>}
         </div>
       );
     case "checkbox":
@@ -101,7 +103,6 @@ export default function FormField({
               className="hidden"
               name={name}
               onChange={handleFile}
-              defaultValue={state?.file || post?.file}
             />
           </label>
           <div className="flex flex-wrap w-full gap-2 mt-2">
@@ -122,9 +123,7 @@ export default function FormField({
               );
             })}
           </div>
-          {state?.errors?.file && (
-            <p className="error">{state?.errors?.file}</p>
-          )}
+          {errors && <p className="error">{errors}</p>}
         </div>
       );
 

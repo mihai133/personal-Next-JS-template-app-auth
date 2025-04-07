@@ -17,10 +17,10 @@ export async function uploadFile(file) {
   if (file) {
     const { data, error } = supabase.storage
       .from("uploads")
-      .upload(`/public/${file.name}`, file, {
+      .upload(`public/${file.name}`, file, {
         cacheControl: "3600",
         upsert: true,
       });
-    return file || undefined;
   }
+  return file;
 }

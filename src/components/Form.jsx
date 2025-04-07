@@ -10,6 +10,7 @@ export default function Form({ handler, post, type, images }) {
   const [files, setFile, message, handleFile, removeImage] = useUploadFile(1);
   const [state, action, isPending] = useActionState(handler, null);
 
+  console.log(post);
   return (
     <form action={action} className="space-y-4">
       {post && (
@@ -24,6 +25,9 @@ export default function Form({ handler, post, type, images }) {
         formType="text"
         label="Title"
         name={`title`}
+        placeholder="Title"
+        defaultValue={state?.title || post?.title}
+        errors={state?.errors?.title}
         // handleChange={handleChange}
         state={state}
         post={post}
@@ -32,6 +36,9 @@ export default function Form({ handler, post, type, images }) {
         formType="textarea"
         label="Content"
         name={`content`}
+        placeholder="Content"
+        defaultValue={state?.content || post?.content}
+        errors={state?.errors?.content}
         // // handleChange={handleChange}
         state={state}
         post={post}
@@ -48,7 +55,7 @@ export default function Form({ handler, post, type, images }) {
         />
       )}
 
-      {!!post?.featImage && (
+      {post?.featImageName && (
         <>
           <Image
             src={post?.featImage?.publicUrl}
@@ -69,7 +76,8 @@ export default function Form({ handler, post, type, images }) {
         <FormField
           formType="file"
           label="Featured Image (Optional)"
-          name="files[]"
+          name="file"
+          errors={state?.errors?.file}
           state={state}
           post={post}
           files={files}
@@ -84,6 +92,9 @@ export default function Form({ handler, post, type, images }) {
         formType="text"
         label="Meta Title"
         name={`metaTitle`}
+        placeholder="Meta Title"
+        defaultValue={state?.metaTitle || post?.metaTitle}
+        errors={state?.errors?.metaTitle}
         // // handleChange={handleChange}
         state={state}
         post={post}
@@ -92,6 +103,9 @@ export default function Form({ handler, post, type, images }) {
         formType="textarea"
         label="Meta Description"
         name={`metaDesc`}
+        placeholder="Meta Description"
+        defaultValue={state?.metaDesc || post?.metaDesc}
+        errors={state?.errors?.metaDesc}
         // // handleChange={handleChange}
         state={state}
         post={post}
