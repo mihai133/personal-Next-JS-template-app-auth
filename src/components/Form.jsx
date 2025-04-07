@@ -66,18 +66,19 @@ export default function Form({ handler, post, type, images }) {
         </>
       )}
 
-      <FormField
-        formType="file"
-        label="Featured Image (Optional)"
-        name="files[]"
-        state={state}
-        post={post}
-        files={files}
-        handleFile={handleFile}
-        message={message}
-        removeImage={removeImage}
-      />
-
+      {type === "Post" && (
+        <FormField
+          formType="file"
+          label="Featured Image (Optional)"
+          name="files[]"
+          state={state}
+          post={post}
+          files={files}
+          handleFile={handleFile}
+          message={message}
+          removeImage={removeImage}
+        />
+      )}
       <hr className="border-gray-200 dark:border-gray-700" />
       <h3>SEO</h3>
       <FormField
