@@ -5,6 +5,7 @@ import supabase from "@/lib/storage";
 import Link from "next/link";
 
 export default async function HomePage() {
+  console.log(process.env.NODE_ENV);
   return (
     <>
       <Particles
