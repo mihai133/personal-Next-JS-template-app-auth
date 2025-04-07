@@ -99,10 +99,10 @@ export default function ContactForm({
             ) : (
               <div className="flex items-end gap-4">
                 <button
-                  disabled={false}
+                  disabled={isPending}
                   className="button-secondary w-full  mt-4"
                 >
-                  {false ? "Sending..." : "Send message"}
+                  {isPending ? "Sending..." : "Send message"}
                 </button>
               </div>
             )}
