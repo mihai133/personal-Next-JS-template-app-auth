@@ -12,7 +12,7 @@ export default function FormField({
   switch (formType) {
     case "text":
       return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col">
           <label htmlFor="title" className="text-white">
             {label}
           </label>

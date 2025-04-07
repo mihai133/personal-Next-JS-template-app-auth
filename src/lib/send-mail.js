@@ -31,19 +31,24 @@ export default async function sendMail(name, email, message) {
     transporter.sendMail(clientMailOptions, (error, info) => {
       if (error) {
         console.log(error);
+        throw new Error("Failed to send email to client");
       } else {
         console.log("Email sent: " + info.response);
+        return { data: info.response, error: null };
       }
     });
 
     transporter.sendMail(secondMailOptions, (error, info) => {
       if (error) {
         console.log(error);
+        throw new Error("Failed to send email to admin");
       } else {
         console.log("Email sent: " + info.response);
+        return { data: info.response, error: null };
       }
     });
   } catch (error) {
     console.log(error);
+    return { data: null, error: error };
   }
 }

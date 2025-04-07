@@ -25,9 +25,15 @@ export async function sendMessage(state, formData) {
 
   // Extract the validated fields
   const { name, email, message } = validatedFields.data;
-
+  // return { successMessage: "Message sent successfully" };
   // Send the message
-  await sendMail(name, email, message);
+  try {
+    await sendMail(name, email, message);
+
+    return { successMessage: "Message sent successfully" };
+  } catch (error) {
+    return { errors: { message: "Failed to send message" } };
+  }
 
   // Redirect to the dashboard
   revalidatePath("/contact");
