@@ -6,14 +6,15 @@ export const useUploadFile = (maxFiles = 10) => {
   console.log(files);
   const handleFile = (e) => {
     setMessage("");
-    let file = e.target.files;
+    const fileArr = [...e.target.files];
+    setFile(files);
 
-    for (let i = 0; i < file.length; i++) {
-      const fileType = file[i]["type"];
+    for (let i = 0; i < fileArr.length; i++) {
+      const fileType = fileArr[i]["type"];
       const validImageTypes = ["image/gif", "image/jpeg", "image/png"];
       if (validImageTypes.includes(fileType)) {
         if (files.length < maxFiles) {
-          setFile([...files, file[i]]);
+          setFile([...files, fileArr[i]]);
         } else {
           console.log("Max files reached");
           setMessage("max files reached");

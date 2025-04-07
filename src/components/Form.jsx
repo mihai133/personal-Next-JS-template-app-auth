@@ -8,7 +8,6 @@ import { useUploadFile } from "@/lib/hooks";
 
 export default function Form({ handler, post, type, images }) {
   const [files, setFile, message, handleFile, removeImage] = useUploadFile(1);
-  // const formAction = files ? handler.bind(null, files) : handler;
   const [state, action, isPending] = useActionState(handler, null);
 
   function handleChange(e) {
@@ -57,22 +56,6 @@ export default function Form({ handler, post, type, images }) {
           post={post}
         />
       )}
-      {/* 
-      {files &&
-        files?.map((file, key) => (
-          <div key={key} className="relative w-1/3 ">
-            <Image
-              src={URL.createObjectURL(file)}
-              alt="Image Preview"
-              className="relative  aspect-video object-cover rounded-lg"
-              width={600}
-              height={400}
-            />
-            <button onClick={(e) => removeImage(e)}>
-              <XMarkIcon className="absolute right-2 top-1 w-10 h-10 dark:peer-checked:text-[var(--color-primary-100)] dark:text-white" />
-            </button>
-          </div>
-        ))} */}
 
       {post?.featImageName && (
         <Image

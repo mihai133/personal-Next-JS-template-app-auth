@@ -15,9 +15,6 @@ export async function createBlogPost(state, formData) {
     return redirect("/");
   }
 
-  // console.log("Form data", formData.get("files[]"));
-  // console.log("FILES", files);
-  // return;
   // Validate the form fields
   const metaTitle = formData.get("metaTitle");
   const metaDesc = formData.get("metaDesc");

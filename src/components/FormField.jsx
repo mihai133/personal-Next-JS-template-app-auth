@@ -98,7 +98,6 @@ export default function FormField({
             <input
               id="dropzone-file"
               type="file"
-              multiple={true}
               className="hidden"
               name={name}
               onChange={handleFile}
