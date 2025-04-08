@@ -1,5 +1,6 @@
-header * {
-  z-index: 99;
+nav {
+  position: relative;
+  z-index: 9999 !important;
 }
 
 /* .image-container {
@@ -17,6 +18,13 @@ header * {
     mask-position: center;
   }
 } */
+
+.website-logo {
+  text-transform: uppercase;
+  font-size: clamp(1rem, 3.5vw, 1.6rem);
+  font-family: var(--font-mona-sans);
+  font-variation-settings: "wdth" 175;
+}
 
 .login-card,
 .register-card {

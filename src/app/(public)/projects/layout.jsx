@@ -12,9 +12,7 @@ export const metadata = {
 export default async function ProjectsLayout({ children }) {
   return (
     <>
-      <header className="sticky top-3 left-0">
-        <Navigation serverComponent={<PrivateNavItems />} />
-      </header>
+      <Navigation serverComponent={<PrivateNavItems />} />
       <Suspense fallback={<LoadingArticles title={"Projects"} />}>
         <main className=" mx-auto min-h-screen px-3 lg:px-0">{children}</main>
       </Suspense>

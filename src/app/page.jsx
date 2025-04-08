@@ -40,7 +40,8 @@ export default async function HomePage() {
           </div>
           <h1 className="antialiased text-4xl uppercase py-6 ">Dev.Field</h1>
           <p className="text-gray-600 dark:text-gray-400 text-lg text-center">
-            {`I'm a software engineer and a web developer. I love to build
+            {`I'm a software engineer and a web developer. 
+            I love to build
             beautiful and functional websites.`}
           </p>
         </div>

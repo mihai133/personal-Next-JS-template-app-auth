@@ -11,7 +11,7 @@ body {
 }
 
 @utility nav-link {
-  @apply text-slate-900 hover:bg-[var(--color-secondary-200)] rounded-md px-3 py-2 text-sm font-medium transition duration-300 h-full text-black dark:text-white  dark:hover:bg-[var(--color-primary-500)];
+  @apply text-slate-950 hover:bg-[var(--color-primary)]/40 rounded-md px-3 py-2 text-sm font-medium transition duration-300 h-full text-black dark:text-white  dark:hover:bg-[var(--color-primary-500)];
 }
 
 @utility nav-link-active {

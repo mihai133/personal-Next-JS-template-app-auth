@@ -7,26 +7,26 @@ export default function ProjectCard({ project, path }) {
   return (
     <>
       <OverlayCard
-        className="relative"
+        className="relative z-[1]"
         spotlightColor={`${
           project.featured
             ? "var(--color-primary-500)"
             : "rgba(255, 255, 255, 0.25)"
         }`}
       >
-        <div>
-          <Link href={`/${path}/show/${project.id.toString()}`}>
-            <h3 className="pointer text-white dark:text-white title">
+        <div className="pe-10">
+          <h3 className=" text-white dark:text-white title font-bold mb-2 text-balance">
+            <Link href={`/${path}/show/${project.id.toString()}`}>
               {project.title}
-            </h3>
-          </Link>
-          <p className="text-slate-400 text-sm mb-2 truncate">
+            </Link>
+          </h3>
+          <p className="text-slate-400 text-sm mb-6 truncate">
             {project.content}
           </p>
         </div>
         <Link
           href={`/${path}/show/${project.id.toString()}`}
-          className="dark:text-gray-400 hover:underline"
+          className="text-white dark:text-gray-400 hover:underline"
         >
           Read project
         </Link>

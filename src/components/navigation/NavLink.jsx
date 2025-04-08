@@ -12,7 +12,7 @@ export default function NavLink({ label, href }) {
       href={href}
       className={`nav-link ${
         pathName === href || (pathName.startsWith(href) && paths.includes(href))
-          ? "bg-[var(--color-secondary-200)] dark:bg-[var(--color-primary-500)]"
+          ? "bg-[var(--color-primary)]/40 dark:bg-[var(--color-primary-500)]"
           : ""
       }`}
     >
