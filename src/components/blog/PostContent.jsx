@@ -9,10 +9,10 @@ export default async function PostContent({ type, post }) {
   const userOwns = user?.userId === post.userId.toString();
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 max-w-screen md:max-w-[1400px] mx-auto">
       <BlogHero post={post} userOwns={userOwns} type={type} />
 
-      <div className="post-content-container container max-w-[900px] mx-auto dark:text-slate-400 dark:bg-neutral-900 rounded-lg lg:px-6 lg:py-10 text-sm mb-2 text-balance space-y-4 text-pretty">
+      <div className="post-content-container container max-w-[900px] mx-auto dark:text-slate-400 dark:bg-neutral-900 rounded-lg px-4 py-6 lg:px-6 lg:py-10 text-sm mb-2 text-balance space-y-4 text-pretty">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>
           {post.content}
         </ReactMarkdown>

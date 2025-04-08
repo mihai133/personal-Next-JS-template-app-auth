@@ -21,7 +21,7 @@ export default async function BlogHero({ post, userOwns, type }) {
 
   return (
     <div
-      className="relative aspect-video flex flex-col items-center justify-center max-w-7xl w-[1400px] rounded-b-xl mx-auto bg-[var(--color-primary-100)] dark:bg-[var(--color-primary-500)] z-1"
+      className="relative max-xl:h-94 xl:aspect-video xl:max-w-7xl xl:w-[1400px]  flex flex-col items-center justify-center rounded-b-xl mx-auto bg-[var(--color-primary-100)] dark:bg-[var(--color-primary-500)] z-1"
       style={{
         backgroundImage: post?.featImageName ? imageUrl : "none",
         backgroundPosition: "center",

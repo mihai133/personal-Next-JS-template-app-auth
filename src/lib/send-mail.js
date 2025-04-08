@@ -16,7 +16,7 @@ export default async function sendMail(name, email, message) {
   const clientMailOptions = {
     from: `TWF <${process.env.SMTP_SERVER_USERNAME}>`,
     to: email,
-    subject: "Message received",
+    subject: "📩 DevField | Message received",
     html: `<p>Name: ${name}</p><p>Email: ${email}</p><p>Message: ${message}</p>`,
   };
 
